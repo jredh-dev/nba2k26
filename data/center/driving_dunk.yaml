@@ -1,0 +1,30 @@
+# Driving Dunk Attribute for Center Position
+position: Center
+attribute: driving_dunk
+base_value: 25  # Starting value in character builder
+base_cap: 89    # Base cap before modifiers
+
+# Physical characteristic modifiers
+modifiers:
+  height:
+    6'7":
+      weight:
+        215:
+          base_adjustment: +6  # Weight provides +6 at 215 lbs
+          wingspan:
+            6'7": 0   # 89 + 6 + 0 = 95 (shown as +6 in UI)
+            6'8": +2  # 89 + 6 + 2 = 97 (shown as +8 in UI)
+            6'9": +3  # 89 + 6 + 3 = 98 (shown as +9 in UI)
+            6'10": +4 # 89 + 6 + 4 = 99 (shown as +10 in UI)
+
+# Notes:
+# - Weight provides a base adjustment of +6 at 215 lbs
+# - Wingspan provides additional incremental bonuses
+# - UI shows cumulative adjustment (weight + wingspan)
+# - Final cap = base_cap + weight_adjustment + wingspan_adjustment
+# 
+# Examples:
+#   6'7" H, 215 lbs, 6'7" WS  -> 89 + 6 + 0  = 95 (UI: +6)
+#   6'7" H, 215 lbs, 6'8" WS  -> 89 + 6 + 2  = 97 (UI: +8)
+#   6'7" H, 215 lbs, 6'9" WS  -> 89 + 6 + 3  = 98 (UI: +9)
+#   6'7" H, 215 lbs, 6'10" WS -> 89 + 6 + 4  = 99 (UI: +10)

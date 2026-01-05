@@ -1,0 +1,12 @@
+# Close Shot - Center Position
+# Cap is always 99 regardless of height, weight, or wingspan
+
+position: Center
+attribute: close_shot
+cap: 99
+
+# No modifiers affect this attribute
+modifiers:
+  height: null
+  weight: null
+  wingspan: null

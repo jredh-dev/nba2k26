@@ -1,0 +1,21 @@
+# Driving Layup Attribute for Center Position
+position: Center
+attribute: driving_layup
+base_value: 25  # Starting value in character builder
+base_cap: 93    # Base cap before modifiers
+
+# Physical characteristic modifiers
+modifiers:
+  height:
+    6'7":
+      weight:
+        215: +6  # At 6'7" and 215 lbs, cap becomes 99 (+6)
+  
+  # Weight and wingspan don't affect driving layup independently
+  weight: {}
+  wingspan: {}
+
+# Notes:
+# - At 6'7" height and 215 lbs weight: cap is 99 (+6 shown in UI)
+# - Weight alone doesn't affect driving layup
+# - Wingspan doesn't affect driving layup
