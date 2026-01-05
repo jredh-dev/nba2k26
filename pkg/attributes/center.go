@@ -27,37 +27,35 @@ const (
 // TODO: Document bounds for all intermediate heights (6'8", 6'9", etc.)
 
 // Center position attribute calculators
+// All functions take measurements as integers:
+//   - heightInches: height in inches (e.g., 79 for 6'7")
+//   - weightLbs: weight in pounds (e.g., 215)
+//   - wingspanInches: wingspan in inches (e.g., 79 for 6'7")
 
 // CloseShot calculates the Close Shot attribute cap for a Center.
 // This attribute is always 99 regardless of physical characteristics.
-func CloseShot(height, weight, wingspan string) int {
+func CloseShot(heightInches, weightLbs, wingspanInches int) int {
 	return 99
 }
 
 // PassAccuracy calculates the Pass Accuracy attribute cap for a Center.
 // This attribute is always 99 regardless of physical characteristics.
-func PassAccuracy(height, weight, wingspan string) int {
+func PassAccuracy(heightInches, weightLbs, wingspanInches int) int {
 	return 99
 }
 
 // DrivingLayup calculates the Driving Layup attribute cap for a Center.
 // Testing notes:
-// - At minimum height (6'7" / 79"): cap is 99
-// - At maximum height (7'4" / 88"): cap is 62
+// - At minimum height (79" / 6'7"): cap is 99
+// - At maximum height (88" / 7'4"): cap is 62
 // - Pattern: Height is the primary factor (taller = lower cap)
 // - Weight and wingspan don't appear to affect this attribute
-func DrivingLayup(height, weight, wingspan string) int {
-	// Convert height to inches for easier range checking
-	heightInches, err := LengthToInches(height)
-	if err != nil {
-		return 0 // Invalid height
-	}
-
+func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	// Height-based caps (discovered through testing)
 	switch heightInches {
-	case MustLengthToInches(CENTER_MIN_HEIGHT): // 6'7" = 79"
+	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
-	case MustLengthToInches(CENTER_MAX_HEIGHT): // 7'4" = 88"
+	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
 		return 62
 	// TODO: Add intermediate heights as you discover them
 	// case MustLengthToInches("6'8"):
@@ -71,126 +69,126 @@ func DrivingLayup(height, weight, wingspan string) int {
 
 // DrivingDunk calculates the Driving Dunk attribute cap for a Center.
 // TODO: Implement based on testing data
-func DrivingDunk(height, weight, wingspan string) int {
+func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // StandingDunk calculates the Standing Dunk attribute cap for a Center.
 // TODO: Implement based on testing data
-func StandingDunk(height, weight, wingspan string) int {
+func StandingDunk(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // PostControl calculates the Post Control attribute cap for a Center.
 // TODO: Implement based on testing data
-func PostControl(height, weight, wingspan string) int {
+func PostControl(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // MidRangeShot calculates the Mid-Range Shot attribute cap for a Center.
 // TODO: Implement based on testing data
-func MidRangeShot(height, weight, wingspan string) int {
+func MidRangeShot(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // ThreePointShot calculates the Three-Point Shot attribute cap for a Center.
 // TODO: Implement based on testing data
-func ThreePointShot(height, weight, wingspan string) int {
+func ThreePointShot(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // FreeThrow calculates the Free Throw attribute cap for a Center.
 // TODO: Implement based on testing data
-func FreeThrow(height, weight, wingspan string) int {
+func FreeThrow(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // BallHandle calculates the Ball Handle attribute cap for a Center.
 // TODO: Implement based on testing data
-func BallHandle(height, weight, wingspan string) int {
+func BallHandle(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // SpeedWithBall calculates the Speed With Ball attribute cap for a Center.
 // TODO: Implement based on testing data
-func SpeedWithBall(height, weight, wingspan string) int {
+func SpeedWithBall(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // InteriorDefense calculates the Interior Defense attribute cap for a Center.
 // TODO: Implement based on testing data
-func InteriorDefense(height, weight, wingspan string) int {
+func InteriorDefense(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // PerimeterDefense calculates the Perimeter Defense attribute cap for a Center.
 // TODO: Implement based on testing data
-func PerimeterDefense(height, weight, wingspan string) int {
+func PerimeterDefense(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Steal calculates the Steal attribute cap for a Center.
 // TODO: Implement based on testing data
-func Steal(height, weight, wingspan string) int {
+func Steal(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Block calculates the Block attribute cap for a Center.
 // TODO: Implement based on testing data
-func Block(height, weight, wingspan string) int {
+func Block(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // OffensiveRebound calculates the Offensive Rebound attribute cap for a Center.
 // TODO: Implement based on testing data
-func OffensiveRebound(height, weight, wingspan string) int {
+func OffensiveRebound(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // DefensiveRebound calculates the Defensive Rebound attribute cap for a Center.
 // TODO: Implement based on testing data
-func DefensiveRebound(height, weight, wingspan string) int {
+func DefensiveRebound(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Speed calculates the Speed attribute cap for a Center.
 // TODO: Implement based on testing data
-func Speed(height, weight, wingspan string) int {
+func Speed(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Agility calculates the Agility attribute cap for a Center.
 // TODO: Implement based on testing data
-func Agility(height, weight, wingspan string) int {
+func Agility(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Strength calculates the Strength attribute cap for a Center.
 // TODO: Implement based on testing data
-func Strength(height, weight, wingspan string) int {
+func Strength(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }
 
 // Vertical calculates the Vertical attribute cap for a Center.
 // TODO: Implement based on testing data
-func Vertical(height, weight, wingspan string) int {
+func Vertical(heightInches, weightLbs, wingspanInches int) int {
 	// Stub: returns 0 until pattern is discovered
 	return 0
 }

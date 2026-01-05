@@ -4,7 +4,6 @@
 package attributes
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,54 +12,53 @@ import (
 // TestCloseShot verifies Close Shot is always 99 regardless of physical characteristics
 func TestCloseShot(t *testing.T) {
 	tests := []struct {
-		name     string
-		height   string
-		weight   string
-		wingspan string
-		want     int
+		name           string
+		heightInches   int
+		weightLbs      int
+		wingspanInches int
+		want           int
 	}{
 		{
-			name:     "minimum size center",
-			height:   "6'7\"",
-			weight:   "215",
-			wingspan: "6'7\"",
-			want:     99,
+			name:           "minimum size center",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      215,
+			wingspanInches: MustLengthToInches("6'7"),
+			want:           99,
 		},
 		{
-			name:     "maximum size center",
-			height:   "7'4\"",
-			weight:   "290",
-			wingspan: "7'10\"",
-			want:     99,
+			name:           "maximum size center",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'10"),
+			want:           99,
 		},
 		{
-			name:     "medium build",
-			height:   "7'0\"",
-			weight:   "250",
-			wingspan: "7'4\"",
-			want:     99,
+			name:           "medium build",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches("7'4"),
+			want:           99,
 		},
 		{
-			name:     "short wingspan",
-			height:   "6'10\"",
-			weight:   "240",
-			wingspan: "6'10\"",
-			want:     99,
+			name:           "short wingspan",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      240,
+			wingspanInches: MustLengthToInches("6'10"),
+			want:           99,
 		},
 		{
-			name:     "long wingspan",
-			height:   "6'10\"",
-			weight:   "240",
-			wingspan: "7'6\"",
-			want:     99,
+			name:           "long wingspan",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      240,
+			wingspanInches: MustLengthToInches("7'6"),
+			want:           99,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := CloseShot(tt.height, tt.weight, tt.wingspan)
-			assert.Equal(t, tt.want, got, "CloseShot(%s, %s, %s) = %d, want %d",
-				tt.height, tt.weight, tt.wingspan, got, tt.want)
+			got := CloseShot(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -68,54 +66,53 @@ func TestCloseShot(t *testing.T) {
 // TestPassAccuracy verifies Pass Accuracy is always 99 regardless of physical characteristics
 func TestPassAccuracy(t *testing.T) {
 	tests := []struct {
-		name     string
-		height   string
-		weight   string
-		wingspan string
-		want     int
+		name           string
+		heightInches   int
+		weightLbs      int
+		wingspanInches int
+		want           int
 	}{
 		{
-			name:     "minimum size center",
-			height:   "6'7\"",
-			weight:   "215",
-			wingspan: "6'7\"",
-			want:     99,
+			name:           "minimum size center",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      215,
+			wingspanInches: MustLengthToInches("6'7"),
+			want:           99,
 		},
 		{
-			name:     "maximum size center",
-			height:   "7'4\"",
-			weight:   "290",
-			wingspan: "7'10\"",
-			want:     99,
+			name:           "maximum size center",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'10"),
+			want:           99,
 		},
 		{
-			name:     "medium build",
-			height:   "7'0\"",
-			weight:   "250",
-			wingspan: "7'4\"",
-			want:     99,
+			name:           "medium build",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches("7'4"),
+			want:           99,
 		},
 		{
-			name:     "light weight",
-			height:   "7'2\"",
-			weight:   "220",
-			wingspan: "7'5\"",
-			want:     99,
+			name:           "light weight",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      220,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           99,
 		},
 		{
-			name:     "heavy weight",
-			height:   "7'2\"",
-			weight:   "285",
-			wingspan: "7'5\"",
-			want:     99,
+			name:           "heavy weight",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      285,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           99,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := PassAccuracy(tt.height, tt.weight, tt.wingspan)
-			assert.Equal(t, tt.want, got, "PassAccuracy(%s, %s, %s) = %d, want %d",
-				tt.height, tt.weight, tt.wingspan, got, tt.want)
+			got := PassAccuracy(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -124,25 +121,25 @@ func TestPassAccuracy(t *testing.T) {
 // Pattern discovered: Height is primary factor (taller = lower cap)
 func TestDrivingLayup(t *testing.T) {
 	tests := []struct {
-		name     string
-		height   string
-		weight   string
-		wingspan string
-		want     int
+		name           string
+		heightInches   int
+		weightLbs      int
+		wingspanInches int
+		want           int
 	}{
 		{
-			name:     "minimum height (6'7\") at minimum build",
-			height:   CENTER_MIN_HEIGHT,
-			weight:   fmt.Sprintf("%d", GetBounds(CENTER_MIN_HEIGHT).MinWeight),
-			wingspan: GetBounds(CENTER_MIN_HEIGHT).MinWingspan,
-			want:     99,
+			name:           "minimum height (6'7\") at minimum build",
+			heightInches:   MustLengthToInches(CENTER_MIN_HEIGHT),
+			weightLbs:      GetBounds(CENTER_MIN_HEIGHT).MinWeight,
+			wingspanInches: MustLengthToInches(GetBounds(CENTER_MIN_HEIGHT).MinWingspan),
+			want:           99,
 		},
 		{
-			name:     "maximum height (7'4\") at maximum build",
-			height:   CENTER_MAX_HEIGHT,
-			weight:   fmt.Sprintf("%d", GetBounds(CENTER_MAX_HEIGHT).MaxWeight),
-			wingspan: GetBounds(CENTER_MAX_HEIGHT).MaxWingspan,
-			want:     62,
+			name:           "maximum height (7'4\") at maximum build",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      GetBounds(CENTER_MAX_HEIGHT).MaxWeight,
+			wingspanInches: MustLengthToInches(GetBounds(CENTER_MAX_HEIGHT).MaxWingspan),
+			want:           62,
 		},
 		// TODO: Add intermediate heights as you test them
 		// {
@@ -156,9 +153,9 @@ func TestDrivingLayup(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := DrivingLayup(tt.height, tt.weight, tt.wingspan)
-			assert.Equal(t, tt.want, got, "DrivingLayup(%s, %s, %s) = %d, want %d",
-				tt.height, tt.weight, tt.wingspan, got, tt.want)
+			got := DrivingLayup(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.want, got, "DrivingLayup(%d, %d, %d) = %d, want %d",
+				tt.heightInches, tt.weightLbs, tt.wingspanInches, got, tt.want)
 		})
 	}
 }
