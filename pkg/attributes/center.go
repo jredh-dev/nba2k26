@@ -55,14 +55,14 @@ func DrivingLayup(height, weight, wingspan string) int {
 
 	// Height-based caps (discovered through testing)
 	switch heightInches {
-	case 79: // 6'7"
+	case MustLengthToInches(CENTER_MIN_HEIGHT): // 6'7" = 79"
 		return 99
-	case 88: // 7'4"
+	case MustLengthToInches(CENTER_MAX_HEIGHT): // 7'4" = 88"
 		return 62
 	// TODO: Add intermediate heights as you discover them
-	// case 80: // 6'8"
+	// case MustLengthToInches("6'8"):
 	//     return ??
-	// case 81: // 6'9"
+	// case MustLengthToInches("6'9"):
 	//     return ??
 	default:
 		return 0 // Not yet tested

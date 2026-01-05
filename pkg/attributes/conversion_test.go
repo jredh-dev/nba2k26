@@ -16,9 +16,12 @@ func TestLengthToInches(t *testing.T) {
 		want   int
 	}{
 		{"6'7\"", 79},
+		{"6'7", 79}, // Without trailing quote
 		{"7'4\"", 88},
+		{"7'4", 88}, // Without trailing quote
 		{"5'9\"", 69},
 		{"7'10\"", 94},
+		{"7'10", 94}, // Without trailing quote
 	}
 
 	for _, tt := range tests {
@@ -28,6 +31,18 @@ func TestLengthToInches(t *testing.T) {
 			assert.Equal(t, tt.want, got)
 		})
 	}
+}
+
+func TestMustLengthToInches(t *testing.T) {
+	// Valid inputs should not panic
+	assert.Equal(t, 79, MustLengthToInches("6'7\""))
+	assert.Equal(t, 79, MustLengthToInches("6'7"))
+	assert.Equal(t, 88, MustLengthToInches("7'4"))
+
+	// Invalid input should panic
+	assert.Panics(t, func() {
+		MustLengthToInches("invalid")
+	})
 }
 
 func TestInchesToLength(t *testing.T) {
@@ -66,4 +81,15 @@ func TestWeightToInt(t *testing.T) {
 			assert.Equal(t, tt.want, got)
 		})
 	}
+}
+
+func TestMustWeightToInt(t *testing.T) {
+	// Valid inputs should not panic
+	assert.Equal(t, 215, MustWeightToInt("215"))
+	assert.Equal(t, 290, MustWeightToInt("290"))
+
+	// Invalid input should panic
+	assert.Panics(t, func() {
+		MustWeightToInt("invalid")
+	})
 }

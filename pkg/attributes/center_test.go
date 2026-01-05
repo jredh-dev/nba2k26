@@ -123,10 +123,6 @@ func TestPassAccuracy(t *testing.T) {
 // TestDrivingLayup verifies Driving Layup caps based on height
 // Pattern discovered: Height is primary factor (taller = lower cap)
 func TestDrivingLayup(t *testing.T) {
-	// Helper to get bounds
-	minBounds := GetBounds(CENTER_MIN_HEIGHT)
-	maxBounds := GetBounds(CENTER_MAX_HEIGHT)
-
 	tests := []struct {
 		name     string
 		height   string
@@ -137,15 +133,15 @@ func TestDrivingLayup(t *testing.T) {
 		{
 			name:     "minimum height (6'7\") at minimum build",
 			height:   CENTER_MIN_HEIGHT,
-			weight:   fmt.Sprintf("%d", minBounds.MinWeight),
-			wingspan: minBounds.MinWingspan,
+			weight:   fmt.Sprintf("%d", GetBounds(CENTER_MIN_HEIGHT).MinWeight),
+			wingspan: GetBounds(CENTER_MIN_HEIGHT).MinWingspan,
 			want:     99,
 		},
 		{
 			name:     "maximum height (7'4\") at maximum build",
 			height:   CENTER_MAX_HEIGHT,
-			weight:   fmt.Sprintf("%d", maxBounds.MaxWeight),
-			wingspan: maxBounds.MaxWingspan,
+			weight:   fmt.Sprintf("%d", GetBounds(CENTER_MAX_HEIGHT).MaxWeight),
+			wingspan: GetBounds(CENTER_MAX_HEIGHT).MaxWingspan,
 			want:     62,
 		},
 		// TODO: Add intermediate heights as you test them
