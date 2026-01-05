@@ -55,11 +55,62 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	switch heightInches {
 	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
+	case MustLengthToInches("7'2"): // 86" (7'2")
+		// ESTIMATED - needs testing
+		// Min weight is 220 lbs (not 230 like 7'3"/7'4")
+		// Pattern suggests: ~3 point increase per inch shorter at min weight
+		// 7'3" at 230 lbs = 80, extrapolating backwards:
+		// 7'2" at 220 lbs should be higher (shorter + lighter)
+		// Conservative estimate: 85
+		bounds := GetBounds("7'2\"")
+		switch {
+		case weightLbs <= bounds.MinWeight:
+			return 85 // ESTIMATED - verify in game
+		case weightLbs <= 224:
+			return 84
+		case weightLbs <= 228:
+			return 83
+		case weightLbs <= 232:
+			return 82
+		case weightLbs <= 236:
+			return 81
+		case weightLbs <= 240:
+			return 80
+		case weightLbs <= 244:
+			return 79
+		case weightLbs <= 248:
+			return 78
+		case weightLbs <= 252:
+			return 77
+		case weightLbs <= 256:
+			return 76
+		case weightLbs <= 260:
+			return 75
+		case weightLbs <= 264:
+			return 74
+		case weightLbs <= 268:
+			return 73
+		case weightLbs <= 272:
+			return 72
+		case weightLbs <= 276:
+			return 71
+		case weightLbs <= 280:
+			return 70
+		case weightLbs <= 284:
+			return 69
+		case weightLbs <= 288:
+			return 68
+		case weightLbs >= bounds.MaxWeight:
+			return 67
+		default:
+			return 0 // Invalid weight (should never happen)
+		}
 	case MustLengthToInches("7'3"): // 87" (7'3")
 		// At 7'3", weight affects the cap (64-80 range)
 		// Pattern: Heavier weight = lower cap
+		bounds := GetBounds("7'3\"")
 		switch {
-		case weightLbs <= 230:
+		case weightLbs <= bounds.MinWeight:
 			return 80
 		case weightLbs <= 231:
 			return 80
@@ -93,15 +144,18 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 66
 		case weightLbs <= 289:
 			return 65
-		default: // 290+
+		case weightLbs >= bounds.MaxWeight:
 			return 64
+		default:
+			return 0 // Invalid weight (should never happen)
 		}
 	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
 		// At maximum height, weight significantly affects the cap
 		// Pattern: Heavier weight = lower cap
 		// Hard-coded values until we understand the game's rounding method
+		bounds := GetBounds(CENTER_MAX_HEIGHT)
 		switch {
-		case weightLbs <= 230:
+		case weightLbs <= bounds.MinWeight:
 			return 77
 		case weightLbs <= 232:
 			return 76
@@ -131,8 +185,10 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 64
 		case weightLbs <= 287:
 			return 63
-		default: // 288+
+		case weightLbs >= bounds.MaxWeight:
 			return 62
+		default:
+			return 0 // Invalid weight (should never happen)
 		}
 	// TODO: Add intermediate heights as you discover them
 	// case MustLengthToInches("6'8"):
