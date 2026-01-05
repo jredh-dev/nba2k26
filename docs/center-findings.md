@@ -28,23 +28,30 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
 - **Pattern**: Height-based + weight affects at tall heights
 - **Confirmed Values**:
   - 6'7"H (any weight) → 99
+  - 7'2"H + weight variations:
+    - 223 lbs → 84
+    - 244 lbs → 80
+    - 269 lbs → 75
+    - 290 lbs → 71
+    - (Full range: 71-84, **13 point spread**)
   - 7'3"H + weight variations:
     - 230 lbs → 80
     - 250 lbs → 75
     - 270 lbs → 70
     - 290 lbs → 64
-    - (Full range: 64-80, 16 point spread)
+    - (Full range: 64-80, **16 point spread**)
   - 7'4"H + weight variations:
     - 230 lbs → 77
     - 250 lbs → 75
     - 270 lbs → 67
     - 290 lbs → 62
-    - (Full range: 62-77, 15 point spread)
-- **Need to Test**: Heights 6'8" through 7'2" to understand when weight starts mattering
+    - (Full range: 62-77, **15 point spread**)
+- **Need to Test**: Heights 6'8" through 7'1" to understand when weight starts mattering
 - **Pattern Analysis**: 
+  - At 7'2": ~5 lbs per cap point (67 lbs = 13 points)
   - At 7'3": ~4 lbs per cap point (60 lbs = 16 points)
   - At 7'4": ~4 lbs per cap point (60 lbs = 15 points)
-  - Similar pattern at both heights, but different base caps
+  - **Observation**: Wider intervals at 7'2", pattern NOT perfectly consistent across heights
 
 ---
 

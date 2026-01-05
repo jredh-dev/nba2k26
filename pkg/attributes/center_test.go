@@ -136,13 +136,34 @@ func TestDrivingLayup(t *testing.T) {
 			wingspanInches: MustLengthToInches(GetBounds(CENTER_MIN_HEIGHT).MinWingspan),
 			want:           99,
 		},
-		// 7'2" height - ESTIMATED (needs testing)
+		// 7'2" height - weight variations (CONFIRMED)
 		{
-			name:           "7'2\" at 220 lbs (estimated - min weight for this height)",
+			name:           "7'2\" at 223 lbs (lightest tested)",
 			heightInches:   MustLengthToInches("7'2"),
-			weightLbs:      220,
+			weightLbs:      223,
 			wingspanInches: MustLengthToInches("7'2"),
-			want:           85, // ESTIMATED - verify in game
+			want:           84,
+		},
+		{
+			name:           "7'2\" at 244 lbs",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      244,
+			wingspanInches: MustLengthToInches("7'2"),
+			want:           80,
+		},
+		{
+			name:           "7'2\" at 269 lbs",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      269,
+			wingspanInches: MustLengthToInches("7'2"),
+			want:           75,
+		},
+		{
+			name:           "7'2\" at 290 lbs (maximum weight)",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'2"),
+			want:           71,
 		},
 		// 7'3" height - weight variations
 		{

@@ -56,52 +56,40 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
 	case MustLengthToInches("7'2"): // 86" (7'2")
-		// ESTIMATED - needs testing
-		// Min weight is 220 lbs (not 230 like 7'3"/7'4")
-		// Pattern suggests: ~3 point increase per inch shorter at min weight
-		// 7'3" at 230 lbs = 80, extrapolating backwards:
-		// 7'2" at 220 lbs should be higher (shorter + lighter)
-		// Conservative estimate: 85
+		// At 7'2", weight affects the cap (71-84 range)
+		// Pattern: ~5 lbs per point (wider intervals than 7'3"/7'4")
 		bounds := GetBounds("7'2\"")
 		switch {
-		case weightLbs <= bounds.MinWeight:
-			return 85 // ESTIMATED - verify in game
-		case weightLbs <= 224:
+		case weightLbs <= bounds.MinWeight: // 220 lbs
+			return 84 // Approximated from pattern (220-223 range)
+		case weightLbs <= 223:
 			return 84
 		case weightLbs <= 228:
 			return 83
-		case weightLbs <= 232:
+		case weightLbs <= 233:
 			return 82
-		case weightLbs <= 236:
+		case weightLbs <= 239:
 			return 81
-		case weightLbs <= 240:
-			return 80
 		case weightLbs <= 244:
+			return 80
+		case weightLbs <= 249:
 			return 79
-		case weightLbs <= 248:
+		case weightLbs <= 254:
 			return 78
-		case weightLbs <= 252:
+		case weightLbs <= 259:
 			return 77
-		case weightLbs <= 256:
-			return 76
-		case weightLbs <= 260:
-			return 75
 		case weightLbs <= 264:
+			return 76
+		case weightLbs <= 269:
+			return 75
+		case weightLbs <= 275:
 			return 74
-		case weightLbs <= 268:
-			return 73
-		case weightLbs <= 272:
-			return 72
-		case weightLbs <= 276:
-			return 71
 		case weightLbs <= 280:
-			return 70
-		case weightLbs <= 284:
-			return 69
-		case weightLbs <= 288:
-			return 68
-		case weightLbs >= bounds.MaxWeight:
-			return 67
+			return 73
+		case weightLbs <= 285:
+			return 72
+		case weightLbs >= bounds.MaxWeight: // 290 lbs
+			return 71
 		default:
 			return 0 // Invalid weight (should never happen)
 		}
