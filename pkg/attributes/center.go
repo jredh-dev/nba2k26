@@ -124,45 +124,47 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 66
 		case weightLbs <= 289:
 			return 65
-		default: // >= 290 lbs (max weight)
+		case weightLbs == 290:
 			return 64
+		default:
+			return 0 // Invalid weight
 		}
-	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
-		// At maximum height, weight significantly affects the cap (62-77 range)
-		// Min weight (230 lbs) returns 77
+	case MustLengthToInches(CENTER_MAX_HEIGHT):
 		switch {
-		case weightLbs <= 230:
+		case weightLbs <= 231:
 			return 77
-		case weightLbs <= 232:
+		case weightLbs <= 235:
 			return 76
-		case weightLbs <= 236:
+		case weightLbs <= 239:
 			return 75
-		case weightLbs <= 240:
+		case weightLbs <= 243:
 			return 74
-		case weightLbs <= 244:
+		case weightLbs <= 247:
 			return 73
-		case weightLbs <= 249:
+		case weightLbs <= 251:
 			return 72
-		case weightLbs <= 252:
+		case weightLbs <= 256:
 			return 71
-		case weightLbs <= 257:
+		case weightLbs <= 260:
 			return 70
-		case weightLbs <= 261:
+		case weightLbs <= 264:
 			return 69
-		case weightLbs <= 265:
+		case weightLbs <= 268:
 			return 68
-		case weightLbs <= 269:
+		case weightLbs <= 272:
 			return 67
-		case weightLbs <= 273:
+		case weightLbs <= 276:
 			return 66
-		case weightLbs <= 277:
+		case weightLbs <= 280:
 			return 65
-		case weightLbs <= 281:
+		case weightLbs <= 285:
 			return 64
-		case weightLbs <= 287:
+		case weightLbs <= 289:
 			return 63
-		default: // >= 288 lbs (max is 290)
+		case weightLbs == 290:
 			return 62
+		default:
+			return 0 // Invalid weight
 		}
 	// TODO: Add intermediate heights as you discover them
 	// case MustLengthToInches("6'8"):
