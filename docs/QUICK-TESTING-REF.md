@@ -2,22 +2,30 @@
 
 ## Next Tests Needed
 
-### 🎯 Priority 1: Driving Layup (Complete Height Pattern)
+### 🎯 Priority 1: Driving Layup (Intermediate Heights)
 
-Test these builds and record the Driving Layup cap:
+**We now know:**
+- 6'7" (any weight) → 99
+- 7'4" → 62-77 (weight dependent)
 
-| Height | Weight | Wingspan | Cap? |
-|--------|--------|----------|------|
-| 6'7"   | 215    | 6'7"     | ✅ 99 |
-| **6'8"**   | **220**    | **6'9"**     | **❓** |
-| **6'9"**   | **225**    | **6'10"**    | **❓** |
-| **6'10"**  | **230**    | **6'11"**    | **❓** |
-| **6'11"**  | **235**    | **7'0"**     | **❓** |
-| **7'0"**   | **240**    | **7'1"**     | **❓** |
-| **7'1"**   | **245**    | **7'2"**     | **❓** |
-| **7'2"**   | **250**    | **7'3"**     | **❓** |
-| **7'3"**   | **255**    | **7'4"**     | **❓** |
-| 7'4"   | 260    | 7'5"     | ✅ 62 |
+**Next: Test intermediate heights to find the pattern**
+
+For each height below, test with **minimum weight** for that height:
+
+| Height | Min Weight | Wingspan | Driving Layup Cap? |
+|--------|------------|----------|-------------------|
+| ✅ 6'7"   | 215    | 6'7"     | 99 |
+| **6'8"**   | **215**    | **6'8"**     | **❓** |
+| **6'9"**   | **220**    | **6'9"**     | **❓** |
+| **6'10"**  | **220**    | **6'10"**    | **❓** |
+| **6'11"**  | **225**    | **6'11"**    | **❓** |
+| **7'0"**   | **225**    | **7'0"**     | **❓** |
+| **7'1"**   | **225**    | **7'1"**     | **❓** |
+| **7'2"**   | **230**    | **7'2"**     | **❓** |
+| **7'3"**   | **230**    | **7'3"**     | **❓** |
+| ✅ 7'4"   | 230    | 7'4"     | 77 |
+
+**Why minimum weight?** This gives us the baseline cap for each height. Then we can test if weight matters at other heights too.
 
 ### 🎯 Priority 2: Driving Dunk (Wingspan Test)
 
