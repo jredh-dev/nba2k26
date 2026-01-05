@@ -5,6 +5,16 @@
 // Each function takes height, weight, and wingspan and returns the attribute cap (0-99).
 package attributes
 
+// Center position physical characteristic bounds
+const (
+	CENTER_MIN_HEIGHT   = "6'7\""
+	CENTER_MAX_HEIGHT   = "7'4\""
+	CENTER_MIN_WEIGHT   = "215"
+	CENTER_MAX_WEIGHT   = "290"
+	CENTER_MIN_WINGSPAN = "6'7\""
+	CENTER_MAX_WINGSPAN = "7'10\""
+)
+
 // Center position attribute calculators
 
 // CloseShot calculates the Close Shot attribute cap for a Center.
@@ -20,9 +30,19 @@ func PassAccuracy(height, weight, wingspan string) int {
 }
 
 // DrivingLayup calculates the Driving Layup attribute cap for a Center.
-// TODO: Implement based on testing data
+// Testing notes:
+// - At minimum size (6'7", 215lbs, 6'7"): cap is 99
+// - At maximum size (7'4", 290lbs, 7'10"): cap is 62
+// - Pattern suggests height is the primary factor (taller = lower cap)
 func DrivingLayup(height, weight, wingspan string) int {
-	// Stub: returns 0 until pattern is discovered
+	switch height {
+	case CENTER_MIN_HEIGHT: // 6'7"
+		return 99
+	case CENTER_MAX_HEIGHT: // 7'4"
+		return 62
+	}
+
+	// TODO: Fill in intermediate heights as you test them
 	return 0
 }
 
