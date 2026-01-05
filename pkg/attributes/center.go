@@ -6,14 +6,25 @@
 package attributes
 
 // Center position physical characteristic bounds
+// Note: Weight and wingspan ranges are HEIGHT-DEPENDENT
+// These constants represent the absolute extremes across all heights
 const (
-	CENTER_MIN_HEIGHT   = "6'7\""
-	CENTER_MAX_HEIGHT   = "7'4\""
-	CENTER_MIN_WEIGHT   = "215"
-	CENTER_MAX_WEIGHT   = "290"
-	CENTER_MIN_WINGSPAN = "6'7\""
-	CENTER_MAX_WINGSPAN = "7'10\""
+	CENTER_MIN_HEIGHT = "6'7\""
+	CENTER_MAX_HEIGHT = "7'4\""
 )
+
+// Height-specific bounds (examples - add more as you discover them)
+// Format: At height X, weight range is Y-Z, wingspan range is A-B
+//
+// 6'7" Center:
+//   - Weight: 215 - 270 lbs
+//   - Wingspan: 6'7" - 7'1"
+//
+// 7'4" Center:
+//   - Weight: 215 - 290 lbs (TODO: verify min weight)
+//   - Wingspan: 6'7" - 7'10" (TODO: verify min wingspan)
+//
+// TODO: Document bounds for all intermediate heights (6'8", 6'9", etc.)
 
 // Center position attribute calculators
 
