@@ -46,17 +46,53 @@ func PassAccuracy(heightInches, weightLbs, wingspanInches int) int {
 
 // DrivingLayup calculates the Driving Layup attribute cap for a Center.
 // Testing notes:
-// - At minimum height (79" / 6'7"): cap is 99
-// - At maximum height (88" / 7'4"): cap is 62
-// - Pattern: Height is the primary factor (taller = lower cap)
-// - Weight and wingspan don't appear to affect this attribute
+// - At minimum height (79" / 6'7"): cap is 99 (weight doesn't matter)
+// - At maximum height (88" / 7'4"): cap is 62-77 (weight DOES matter: heavier = lower)
+// - Pattern: Height is the primary factor, weight affects at maximum height
+// - Wingspan doesn't appear to affect this attribute
 func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	// Height-based caps (discovered through testing)
 	switch heightInches {
 	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
 	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
-		return 62
+		// At maximum height, weight significantly affects the cap
+		// Pattern: Heavier weight = lower cap
+		// Hard-coded values until we understand the game's rounding method
+		switch {
+		case weightLbs <= 230:
+			return 77
+		case weightLbs <= 232:
+			return 76
+		case weightLbs <= 236:
+			return 75
+		case weightLbs <= 240:
+			return 74
+		case weightLbs <= 244:
+			return 73
+		case weightLbs <= 249:
+			return 72
+		case weightLbs <= 252:
+			return 71
+		case weightLbs <= 257:
+			return 70
+		case weightLbs <= 261:
+			return 69
+		case weightLbs <= 265:
+			return 68
+		case weightLbs <= 269:
+			return 67
+		case weightLbs <= 273:
+			return 66
+		case weightLbs <= 277:
+			return 65
+		case weightLbs <= 281:
+			return 64
+		case weightLbs <= 287:
+			return 63
+		default: // 288+
+			return 62
+		}
 	// TODO: Add intermediate heights as you discover them
 	// case MustLengthToInches("6'8"):
 	//     return ??

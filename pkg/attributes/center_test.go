@@ -117,8 +117,10 @@ func TestPassAccuracy(t *testing.T) {
 	}
 }
 
-// TestDrivingLayup verifies Driving Layup caps based on height
-// Pattern discovered: Height is primary factor (taller = lower cap)
+// TestDrivingLayup verifies Driving Layup caps based on height and weight
+// Pattern discovered:
+// - Height is primary factor (taller = lower cap)
+// - At 7'4", weight also matters (heavier = lower cap)
 func TestDrivingLayup(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -128,27 +130,56 @@ func TestDrivingLayup(t *testing.T) {
 		want           int
 	}{
 		{
-			name:           "minimum height (6'7\") at minimum build",
+			name:           "minimum height (6'7\") at minimum weight",
 			heightInches:   MustLengthToInches(CENTER_MIN_HEIGHT),
 			weightLbs:      GetBounds(CENTER_MIN_HEIGHT).MinWeight,
 			wingspanInches: MustLengthToInches(GetBounds(CENTER_MIN_HEIGHT).MinWingspan),
 			want:           99,
 		},
+		// 7'4" height - weight variations
 		{
-			name:           "maximum height (7'4\") at maximum build",
+			name:           "7'4\" at 230 lbs (lightest tested)",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      230,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           77,
+		},
+		{
+			name:           "7'4\" at 232 lbs",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      232,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           76,
+		},
+		{
+			name:           "7'4\" at 240 lbs",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      240,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           74,
+		},
+		{
+			name:           "7'4\" at 265 lbs",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      265,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           68,
+		},
+		{
+			name:           "7'4\" at 287 lbs",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      287,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           63,
+		},
+		{
+			name:           "7'4\" at 290 lbs (maximum weight)",
 			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
 			weightLbs:      GetBounds(CENTER_MAX_HEIGHT).MaxWeight,
 			wingspanInches: MustLengthToInches(GetBounds(CENTER_MAX_HEIGHT).MaxWingspan),
 			want:           62,
 		},
 		// TODO: Add intermediate heights as you test them
-		// {
-		//     name:     "6'8\"",
-		//     height:   "6'8\"",
-		//     weight:   "220",
-		//     wingspan: "6'9\"",
-		//     want:     ??,
-		// },
 	}
 
 	for _, tt := range tests {
