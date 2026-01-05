@@ -42,19 +42,31 @@ func PassAccuracy(height, weight, wingspan string) int {
 
 // DrivingLayup calculates the Driving Layup attribute cap for a Center.
 // Testing notes:
-// - At minimum size (6'7", 215lbs, 6'7"): cap is 99
-// - At maximum size (7'4", 290lbs, 7'10"): cap is 62
-// - Pattern suggests height is the primary factor (taller = lower cap)
+// - At minimum height (6'7" / 79"): cap is 99
+// - At maximum height (7'4" / 88"): cap is 62
+// - Pattern: Height is the primary factor (taller = lower cap)
+// - Weight and wingspan don't appear to affect this attribute
 func DrivingLayup(height, weight, wingspan string) int {
-	switch height {
-	case CENTER_MIN_HEIGHT: // 6'7"
-		return 99
-	case CENTER_MAX_HEIGHT: // 7'4"
-		return 62
+	// Convert height to inches for easier range checking
+	heightInches, err := HeightToInches(height)
+	if err != nil {
+		return 0 // Invalid height
 	}
 
-	// TODO: Fill in intermediate heights as you test them
-	return 0
+	// Height-based caps (discovered through testing)
+	switch heightInches {
+	case 79: // 6'7"
+		return 99
+	case 88: // 7'4"
+		return 62
+	// TODO: Add intermediate heights as you discover them
+	// case 80: // 6'8"
+	//     return ??
+	// case 81: // 6'9"
+	//     return ??
+	default:
+		return 0 // Not yet tested
+	}
 }
 
 // DrivingDunk calculates the Driving Dunk attribute cap for a Center.

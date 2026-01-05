@@ -4,6 +4,7 @@
 package attributes
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -122,6 +123,10 @@ func TestPassAccuracy(t *testing.T) {
 // TestDrivingLayup verifies Driving Layup caps based on height
 // Pattern discovered: Height is primary factor (taller = lower cap)
 func TestDrivingLayup(t *testing.T) {
+	// Helper to get bounds
+	minBounds := GetBounds(CENTER_MIN_HEIGHT)
+	maxBounds := GetBounds(CENTER_MAX_HEIGHT)
+
 	tests := []struct {
 		name     string
 		height   string
@@ -130,17 +135,17 @@ func TestDrivingLayup(t *testing.T) {
 		want     int
 	}{
 		{
-			name:     "minimum height (6'7\")",
+			name:     "minimum height (6'7\") at minimum build",
 			height:   CENTER_MIN_HEIGHT,
-			weight:   "215",
-			wingspan: "6'7\"",
+			weight:   fmt.Sprintf("%d", minBounds.MinWeight),
+			wingspan: minBounds.MinWingspan,
 			want:     99,
 		},
 		{
-			name:     "maximum height (7'4\")",
+			name:     "maximum height (7'4\") at maximum build",
 			height:   CENTER_MAX_HEIGHT,
-			weight:   "290",
-			wingspan: "7'10\"",
+			weight:   fmt.Sprintf("%d", maxBounds.MaxWeight),
+			wingspan: maxBounds.MaxWingspan,
 			want:     62,
 		},
 		// TODO: Add intermediate heights as you test them
