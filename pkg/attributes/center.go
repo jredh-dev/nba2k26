@@ -58,10 +58,7 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	case MustLengthToInches("7'2"): // 86" (7'2")
 		// At 7'2", weight affects the cap (71-84 range)
 		// Pattern: ~5 lbs per point (wider intervals than 7'3"/7'4")
-		bounds := GetBounds("7'2\"")
 		switch {
-		case weightLbs <= bounds.MinWeight: // 220 lbs
-			return 84 // Approximated from pattern (220-223 range)
 		case weightLbs <= 223:
 			return 84
 		case weightLbs <= 228:
@@ -88,18 +85,13 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 73
 		case weightLbs <= 285:
 			return 72
-		case weightLbs >= bounds.MaxWeight: // 290 lbs
+		default: // >= 286 lbs (max is 290)
 			return 71
-		default:
-			return 0 // Invalid weight (should never happen)
 		}
 	case MustLengthToInches("7'3"): // 87" (7'3")
 		// At 7'3", weight affects the cap (64-80 range)
-		// Pattern: Heavier weight = lower cap
-		bounds := GetBounds("7'3\"")
+		// Min weight (230 lbs) and 231 lbs both return 80
 		switch {
-		case weightLbs <= bounds.MinWeight:
-			return 80
 		case weightLbs <= 231:
 			return 80
 		case weightLbs <= 234:
@@ -132,18 +124,14 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 66
 		case weightLbs <= 289:
 			return 65
-		case weightLbs >= bounds.MaxWeight:
+		default: // >= 290 lbs (max weight)
 			return 64
-		default:
-			return 0 // Invalid weight (should never happen)
 		}
 	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
-		// At maximum height, weight significantly affects the cap
-		// Pattern: Heavier weight = lower cap
-		// Hard-coded values until we understand the game's rounding method
-		bounds := GetBounds(CENTER_MAX_HEIGHT)
+		// At maximum height, weight significantly affects the cap (62-77 range)
+		// Min weight (230 lbs) returns 77
 		switch {
-		case weightLbs <= bounds.MinWeight:
+		case weightLbs <= 230:
 			return 77
 		case weightLbs <= 232:
 			return 76
@@ -173,10 +161,8 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 			return 64
 		case weightLbs <= 287:
 			return 63
-		case weightLbs >= bounds.MaxWeight:
+		default: // >= 288 lbs (max is 290)
 			return 62
-		default:
-			return 0 // Invalid weight (should never happen)
 		}
 	// TODO: Add intermediate heights as you discover them
 	// case MustLengthToInches("6'8"):
