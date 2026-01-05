@@ -7,7 +7,6 @@ import "fmt"
 
 // PhysicalBounds represents the valid weight and wingspan ranges for a given height
 type PhysicalBounds struct {
-	Height      string
 	MinWeight   int
 	MaxWeight   int
 	MinWingspan string
@@ -18,18 +17,63 @@ type PhysicalBounds struct {
 // This data is discovered through in-game testing
 var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'7\"": {
-		Height:      "6'7\"",
 		MinWeight:   215,
 		MaxWeight:   270,
 		MinWingspan: "6'7\"",
 		MaxWingspan: "7'1\"",
 	},
-	// TODO: Add 6'8", 6'9", 6'10", 6'11", 7'0", 7'1", 7'2", 7'3"
-	"7'4\"": {
-		Height:      "7'4\"",
-		MinWeight:   215, // TODO: Verify this
+	"6'8\"": {
+		MinWeight:   215,
+		MaxWeight:   275,
+		MinWingspan: "6'8\"",
+		MaxWingspan: "7'2\"",
+	},
+	"6'9\"": {
+		MinWeight:   215,
+		MaxWeight:   285,
+		MinWingspan: "6'9\"",
+		MaxWingspan: "7'3\"",
+	},
+	"6'10\"": {
+		MinWeight:   215,
+		MaxWeight:   285,
+		MinWingspan: "6'10\"",
+		MaxWingspan: "7'4\"",
+	},
+	"6'11\"": {
+		MinWeight:   215,
 		MaxWeight:   290,
-		MinWingspan: "6'7\"", // TODO: Verify this
+		MinWingspan: "6'11\"",
+		MaxWingspan: "7'5\"",
+	},
+	"7'0\"": {
+		MinWeight:   215,
+		MaxWeight:   290,
+		MinWingspan: "7'0\"",
+		MaxWingspan: "7'6\"",
+	},
+	"7'1\"": {
+		MinWeight:   220,
+		MaxWeight:   290,
+		MinWingspan: "7'1\"",
+		MaxWingspan: "7'7\"",
+	},
+	"7'2\"": {
+		MinWeight:   220,
+		MaxWeight:   290,
+		MinWingspan: "7'2\"",
+		MaxWingspan: "7'8\"",
+	},
+	"7'3\"": {
+		MinWeight:   230,
+		MaxWeight:   290,
+		MinWingspan: "7'3\"",
+		MaxWingspan: "7'9\"",
+	},
+	"7'4\"": {
+		MinWeight:   230,
+		MaxWeight:   290,
+		MinWingspan: "7'4\"",
 		MaxWingspan: "7'10\"",
 	},
 }
