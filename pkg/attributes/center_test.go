@@ -136,6 +136,35 @@ func TestDrivingLayup(t *testing.T) {
 			wingspanInches: MustLengthToInches(GetBounds(CENTER_MIN_HEIGHT).MinWingspan),
 			want:           99,
 		},
+		// 7'3" height - weight variations
+		{
+			name:           "7'3\" at 230 lbs (minimum weight)",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      230,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           80,
+		},
+		{
+			name:           "7'3\" at 250 lbs",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           75,
+		},
+		{
+			name:           "7'3\" at 270 lbs",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           70,
+		},
+		{
+			name:           "7'3\" at 290 lbs (maximum weight)",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           64,
+		},
 		// 7'4" height - weight variations
 		{
 			name:           "7'4\" at 230 lbs (lightest tested)",

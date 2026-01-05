@@ -55,6 +55,47 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	switch heightInches {
 	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
+	case MustLengthToInches("7'3"): // 87" (7'3")
+		// At 7'3", weight affects the cap (64-80 range)
+		// Pattern: Heavier weight = lower cap
+		switch {
+		case weightLbs <= 230:
+			return 80
+		case weightLbs <= 231:
+			return 80
+		case weightLbs <= 234:
+			return 79
+		case weightLbs <= 238:
+			return 78
+		case weightLbs <= 242:
+			return 77
+		case weightLbs <= 246:
+			return 76
+		case weightLbs <= 250:
+			return 75
+		case weightLbs <= 254:
+			return 74
+		case weightLbs <= 258:
+			return 73
+		case weightLbs <= 262:
+			return 72
+		case weightLbs <= 266:
+			return 71
+		case weightLbs <= 270:
+			return 70
+		case weightLbs <= 274:
+			return 69
+		case weightLbs <= 277:
+			return 68
+		case weightLbs <= 281:
+			return 67
+		case weightLbs <= 285:
+			return 66
+		case weightLbs <= 289:
+			return 65
+		default: // 290+
+			return 64
+		}
 	case MustLengthToInches(CENTER_MAX_HEIGHT): // 88" (7'4")
 		// At maximum height, weight significantly affects the cap
 		// Pattern: Heavier weight = lower cap
