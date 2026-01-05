@@ -48,7 +48,7 @@ func PassAccuracy(height, weight, wingspan string) int {
 // - Weight and wingspan don't appear to affect this attribute
 func DrivingLayup(height, weight, wingspan string) int {
 	// Convert height to inches for easier range checking
-	heightInches, err := HeightToInches(height)
+	heightInches, err := LengthToInches(height)
 	if err != nil {
 		return 0 // Invalid height
 	}

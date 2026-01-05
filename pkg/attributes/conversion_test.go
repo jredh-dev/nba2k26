@@ -10,9 +10,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestHeightToInches(t *testing.T) {
+func TestLengthToInches(t *testing.T) {
 	tests := []struct {
-		height string
+		length string
 		want   int
 	}{
 		{"6'7\"", 79},
@@ -22,15 +22,15 @@ func TestHeightToInches(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.height, func(t *testing.T) {
-			got, err := HeightToInches(tt.height)
+		t.Run(tt.length, func(t *testing.T) {
+			got, err := LengthToInches(tt.length)
 			require.NoError(t, err)
 			assert.Equal(t, tt.want, got)
 		})
 	}
 }
 
-func TestInchesToHeight(t *testing.T) {
+func TestInchesToLength(t *testing.T) {
 	tests := []struct {
 		inches int
 		want   string
@@ -43,7 +43,7 @@ func TestInchesToHeight(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.want, func(t *testing.T) {
-			got := InchesToHeight(tt.inches)
+			got := InchesToLength(tt.inches)
 			assert.Equal(t, tt.want, got)
 		})
 	}
