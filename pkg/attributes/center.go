@@ -397,186 +397,230 @@ func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
 	return 0
 }
 
-// DrivingDunk2 calculates wingspan + weight penalties from max cap for Driving Dunk.
-// Returns the total penalty from 99 based on height, wingspan, and weight.
+// DrivingDunk2 calculates Driving Dunk using an additive deficit model.
+// Formula: 99 - heightDeficit - wingspanDeficit - weightDeficit = Final Cap
 //
-// Current implementation: Only wingspan penalties at baseline weight (270 lbs).
-// Weight penalties will be added after testing weight variations.
-//
-// Formula (future): 99 - DrivingDunk2(height, weight, wingspan) = Final Cap
+// Current implementation: height and wingspan deficits are complete.
+// Weight deficit will be added after testing weight variations.
 func DrivingDunk2(heightInches, weightLbs, wingspanInches int) int {
-	// For each height, calculate penalty from 99 based on wingspan
-	// All data currently at baseline weight (270 lbs)
-	// Weight modifier will be added later
+	var heightDeficit int
+	var wingspanDeficit int
+	var weightDeficit int
 
+	// Step 1: Calculate height deficit (how much height lowers the cap from 99)
 	switch heightInches {
 	case MustLengthToInches("6'7"): // 79"
-		// Max cap at this height: 99 (with 7'1"+ wingspan)
+		heightDeficit = 0 // Can reach 99
+	case MustLengthToInches("6'8"): // 80"
+		heightDeficit = 0 // Can reach 99
+	case MustLengthToInches("6'9"): // 81"
+		heightDeficit = 0 // Can reach 99
+	case MustLengthToInches("6'10"): // 82"
+		heightDeficit = 3 // Max 96
+	case MustLengthToInches("6'11"): // 83"
+		heightDeficit = 7 // Max 92
+	case MustLengthToInches("7'0"): // 84"
+		heightDeficit = 10 // Max 89
+	case MustLengthToInches("7'1"): // 85"
+		heightDeficit = 17 // Max 82
+	case MustLengthToInches("7'2"): // 86"
+		heightDeficit = 22 // Max 77
+	case MustLengthToInches("7'3"): // 87"
+		heightDeficit = 27 // Max 72
+	case MustLengthToInches("7'4"): // 88"
+		heightDeficit = 29 // Max 70
+	default:
+		heightDeficit = 99 // Unknown height
+	}
+
+	// Step 2: Calculate wingspan deficit (shorter wingspan = larger deficit)
+	// Based on minimum wingspan for each height
+	switch heightInches {
+	case MustLengthToInches("6'7"): // 79"
+		minWingspan := MustLengthToInches("6'7")
 		switch wingspanInches {
-		case MustLengthToInches("6'7"):
-			return 4 // Cap 95
-		case MustLengthToInches("6'8"):
-			return 2 // Cap 97
-		case MustLengthToInches("6'9"):
-			return 1 // Cap 98
-		default: // 7'1" and above
-			return 0 // Cap 99
+		case minWingspan:
+			wingspanDeficit = 4
+		case minWingspan + 1:
+			wingspanDeficit = 2
+		case minWingspan + 2:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 4 (7'1")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("6'8"): // 80"
-		// Max cap at this height: 99 (with 7'0"+ wingspan)
+		minWingspan := MustLengthToInches("6'8")
 		switch wingspanInches {
-		case MustLengthToInches("6'8"):
-			return 5 // Cap 94
-		case MustLengthToInches("6'9"):
-			return 4 // Cap 95
-		case MustLengthToInches("6'10"):
-			return 3 // Cap 96
-		case MustLengthToInches("6'11"):
-			return 1 // Cap 98
-		default: // 7'0" and above
-			return 0 // Cap 99
+		case minWingspan:
+			wingspanDeficit = 5
+		case minWingspan + 1:
+			wingspanDeficit = 4
+		case minWingspan + 2:
+			wingspanDeficit = 3
+		case minWingspan + 3:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 4 (7'0")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("6'9"): // 81"
-		// Max cap at this height: 99 (with 7'3" wingspan)
+		minWingspan := MustLengthToInches("6'9")
 		switch wingspanInches {
-		case MustLengthToInches("6'9"):
-			return 7 // Cap 92
-		case MustLengthToInches("6'10"):
-			return 6 // Cap 93
-		case MustLengthToInches("6'11"):
-			return 5 // Cap 94
-		case MustLengthToInches("7'0"):
-			return 4 // Cap 95
-		case MustLengthToInches("7'1"):
-			return 3 // Cap 96
-		case MustLengthToInches("7'2"):
-			return 1 // Cap 98
-		default: // 7'3" and above
-			return 0 // Cap 99
+		case minWingspan:
+			wingspanDeficit = 7
+		case minWingspan + 1:
+			wingspanDeficit = 6
+		case minWingspan + 2:
+			wingspanDeficit = 5
+		case minWingspan + 3:
+			wingspanDeficit = 4
+		case minWingspan + 4:
+			wingspanDeficit = 3
+		case minWingspan + 5:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 6 (7'3")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("6'10"): // 82"
-		// Max cap at this height: 96 (with 7'4" wingspan)
+		minWingspan := MustLengthToInches("6'10")
 		switch wingspanInches {
-		case MustLengthToInches("6'10"):
-			return 6 // Cap 90
-		case MustLengthToInches("6'11"):
-			return 5 // Cap 91
-		case MustLengthToInches("7'0"):
-			return 4 // Cap 92
-		case MustLengthToInches("7'1"):
-			return 3 // Cap 93
-		case MustLengthToInches("7'2"):
-			return 2 // Cap 94
-		case MustLengthToInches("7'3"):
-			return 1 // Cap 95
-		default: // 7'4" and above
-			return 0 // Cap 96
+		case minWingspan:
+			wingspanDeficit = 6
+		case minWingspan + 1:
+			wingspanDeficit = 5
+		case minWingspan + 2:
+			wingspanDeficit = 4
+		case minWingspan + 3:
+			wingspanDeficit = 3
+		case minWingspan + 4:
+			wingspanDeficit = 2
+		case minWingspan + 5:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 6 (7'4")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("6'11"): // 83"
-		// Max cap at this height: 92 (with 7'5" wingspan)
+		minWingspan := MustLengthToInches("6'11")
 		switch wingspanInches {
-		case MustLengthToInches("6'11"):
-			return 6 // Cap 86
-		case MustLengthToInches("7'0"):
-			return 5 // Cap 87
-		case MustLengthToInches("7'1"):
-			return 4 // Cap 88
-		case MustLengthToInches("7'2"):
-			return 3 // Cap 89
-		case MustLengthToInches("7'3"):
-			return 2 // Cap 90
-		case MustLengthToInches("7'4"):
-			return 1 // Cap 91
-		default: // 7'5" and above
-			return 0 // Cap 92
+		case minWingspan:
+			wingspanDeficit = 6
+		case minWingspan + 1:
+			wingspanDeficit = 5
+		case minWingspan + 2:
+			wingspanDeficit = 4
+		case minWingspan + 3:
+			wingspanDeficit = 3
+		case minWingspan + 4:
+			wingspanDeficit = 2
+		case minWingspan + 5:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 6 (7'5")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("7'0"): // 84"
-		// Max cap at this height: 89 (with 7'6" wingspan)
+		minWingspan := MustLengthToInches("7'0")
 		switch wingspanInches {
-		case MustLengthToInches("7'0"):
-			return 6 // Cap 83
-		case MustLengthToInches("7'1"):
-			return 5 // Cap 84
-		case MustLengthToInches("7'2"):
-			return 4 // Cap 85
-		case MustLengthToInches("7'3"):
-			return 3 // Cap 86
-		case MustLengthToInches("7'4"):
-			return 2 // Cap 87
-		case MustLengthToInches("7'5"):
-			return 1 // Cap 88
-		default: // 7'6" and above
-			return 0 // Cap 89
+		case minWingspan:
+			wingspanDeficit = 6
+		case minWingspan + 1:
+			wingspanDeficit = 5
+		case minWingspan + 2:
+			wingspanDeficit = 4
+		case minWingspan + 3:
+			wingspanDeficit = 3
+		case minWingspan + 4:
+			wingspanDeficit = 2
+		case minWingspan + 5:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 6 (7'6")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("7'1"): // 85"
-		// Max cap at this height: 82 (with 7'6"+ wingspan)
+		minWingspan := MustLengthToInches("7'1")
 		switch wingspanInches {
-		case MustLengthToInches("7'1"):
-			return 5 // Cap 77
-		case MustLengthToInches("7'2"):
-			return 4 // Cap 78
-		case MustLengthToInches("7'3"):
-			return 3 // Cap 79
-		case MustLengthToInches("7'4"):
-			return 2 // Cap 80
-		case MustLengthToInches("7'5"):
-			return 1 // Cap 81
-		default: // 7'6" and above
-			return 0 // Cap 82
+		case minWingspan:
+			wingspanDeficit = 5
+		case minWingspan + 1:
+			wingspanDeficit = 4
+		case minWingspan + 2:
+			wingspanDeficit = 3
+		case minWingspan + 3:
+			wingspanDeficit = 2
+		case minWingspan + 4:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 5 (7'6")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("7'2"): // 86"
-		// Max cap at this height: 77 (with 7'8" wingspan)
+		minWingspan := MustLengthToInches("7'2")
 		switch wingspanInches {
-		case MustLengthToInches("7'2"):
-			return 5 // Cap 72
-		case MustLengthToInches("7'3"):
-			return 5 // Cap 72 (same as 7'2")
-		case MustLengthToInches("7'4"):
-			return 4 // Cap 73
-		case MustLengthToInches("7'5"):
-			return 3 // Cap 74
-		case MustLengthToInches("7'6"):
-			return 2 // Cap 75
-		case MustLengthToInches("7'7"):
-			return 1 // Cap 76
-		default: // 7'8" and above
-			return 0 // Cap 77
+		case minWingspan:
+			wingspanDeficit = 5
+		case minWingspan + 1:
+			wingspanDeficit = 5 // Same as min
+		case minWingspan + 2:
+			wingspanDeficit = 4
+		case minWingspan + 3:
+			wingspanDeficit = 3
+		case minWingspan + 4:
+			wingspanDeficit = 2
+		case minWingspan + 5:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 6 (7'8")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("7'3"): // 87"
-		// Max cap at this height: 72 (with 7'8"+ wingspan)
+		minWingspan := MustLengthToInches("7'3")
 		switch wingspanInches {
-		case MustLengthToInches("7'3"):
-			return 4 // Cap 68
-		case MustLengthToInches("7'4"):
-			return 3 // Cap 69
-		case MustLengthToInches("7'5"):
-			return 3 // Cap 69 (same as 7'4")
-		case MustLengthToInches("7'6"):
-			return 2 // Cap 70
-		case MustLengthToInches("7'7"):
-			return 1 // Cap 71
-		default: // 7'8" and above
-			return 0 // Cap 72
+		case minWingspan:
+			wingspanDeficit = 4
+		case minWingspan + 1:
+			wingspanDeficit = 3
+		case minWingspan + 2:
+			wingspanDeficit = 3 // Same as +1
+		case minWingspan + 3:
+			wingspanDeficit = 2
+		case minWingspan + 4:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 5 (7'8")
+			wingspanDeficit = 0
 		}
 	case MustLengthToInches("7'4"): // 88"
-		// Max cap at this height: 70 (with 7'9"+ wingspan)
+		minWingspan := MustLengthToInches("7'4")
 		switch wingspanInches {
-		case MustLengthToInches("7'4"):
-			return 4 // Cap 66
-		case MustLengthToInches("7'5"):
-			return 3 // Cap 67
-		case MustLengthToInches("7'6"):
-			return 2 // Cap 68
-		case MustLengthToInches("7'7"):
-			return 2 // Cap 68 (same as 7'6")
-		case MustLengthToInches("7'8"):
-			return 1 // Cap 69
-		default: // 7'9" and above
-			return 0 // Cap 70
+		case minWingspan:
+			wingspanDeficit = 4
+		case minWingspan + 1:
+			wingspanDeficit = 3
+		case minWingspan + 2:
+			wingspanDeficit = 2
+		case minWingspan + 3:
+			wingspanDeficit = 2 // Same as +2
+		case minWingspan + 4:
+			wingspanDeficit = 1
+		default: // >= minWingspan + 5 (7'9")
+			wingspanDeficit = 0
 		}
 	default:
-		return 99 // Unknown height
+		wingspanDeficit = 0
 	}
+
+	// Step 3: Calculate weight deficit (heavier = larger deficit)
+	// TODO: Implement after weight testing
+	// For now, assume baseline weight (270 lbs) = 0 deficit
+	weightDeficit = 0
+
+	// Step 4: Calculate final cap
+	finalCap := 99 - heightDeficit - wingspanDeficit - weightDeficit
+
+	// Clamp to valid range [0, 99]
+	if finalCap < 0 {
+		return 0
+	}
+	if finalCap > 99 {
+		return 99
+	}
+
+	return finalCap
 }
 
 // StandingDunk calculates the Standing Dunk attribute cap for a Center.
