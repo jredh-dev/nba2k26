@@ -605,9 +605,10 @@ func DrivingDunk2(heightInches, weightLbs, wingspanInches int) int {
 	}
 
 	// Step 3: Calculate weight deficit (heavier = larger deficit)
-	// TODO: Implement after weight testing
-	// For now, assume baseline weight (270 lbs) = 0 deficit
-	weightDeficit = 0
+	// TODO: Implement after weight testing is complete
+	// Known data points for 7'4": 260 lbs → 64 cap, 290 lbs → 59 cap (rate: -1 per 6 lbs)
+	// See docs/DATA-INCONSISTENCY-ISSUE.md for blocking issue with baseline weight
+	weightDeficit = 0 // Placeholder until testing resolves data inconsistency
 
 	// Step 4: Calculate final cap
 	finalCap := 99 - heightDeficit - wingspanDeficit - weightDeficit
