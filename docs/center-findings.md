@@ -43,19 +43,28 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
   - Weight impact increases dramatically with height
   - Taller players have much wider cap ranges based on weight
 
-### Driving Dunk 🔄 (PARTIAL - Testing in Progress)
-- **Pattern**: Wingspan affects caps (CONFIRMED)
-- **Height Impact**: Unknown (need to test more heights)
-- **Weight Impact**: Appears not to matter at 6'7" (need confirmation at other heights)
-- **Confirmed Values at 6'7" height**:
-  - 6'7"H 270LBS 6'7"WS → 95
-  - 6'7"H 270LBS 6'8"WS → 97
-  - 6'7"H 270LBS 6'9"WS → 98
-  - 6'7"H 270LBS 7'1"WS → 99
+### Driving Dunk ✅ (WINGSPAN DATA COMPLETE - Weight Effects TODO)
+- **Pattern**: Height + Wingspan both affect caps (Weight ALSO matters!)
+- **Wingspan Impact**: Confirmed - larger wingspan = higher cap
+- **Height Impact**: Taller heights have lower base caps
+- **Weight Impact**: Discovered but not yet implemented (need modifier system)
+- **Confirmed Wingspan Data (at 270 lbs baseline)**:
+  - 6'7"H: 95-99 cap range (6'7"WS → 7'1"WS)
+  - 6'8"H: 94-99 cap range (6'8"WS → 7'2"WS)
+  - 6'9"H: 92-99 cap range (6'9"WS → 7'3"WS)
+  - 6'10"H: 90-96 cap range (6'10"WS → 7'4"WS)
+  - 6'11"H: 86-92 cap range (6'11"WS → 7'5"WS)
+  - 7'0"H: 83-89 cap range (7'0"WS → 7'6"WS)
+  - 7'1"H: 77-82 cap range (7'1"WS → 7'7"WS)
+  - 7'2"H: 72-77 cap range (7'2"WS → 7'8"WS)
+  - 7'3"H: 68-72 cap range (7'3"WS → 7'9"WS)
+  - 7'4"H: 66-70 cap range (7'4"WS → 7'10"WS)
 - **Key Insights**:
-  - Wingspan DOES affect Driving Dunk (unlike Driving Layup)
-  - At 6'7" height: +2 cap per inch of wingspan increase (approximately)
-  - Need to test: Other heights, weight variations, full wingspan range
+  - All 10 heights tested with full wingspan ranges
+  - Wingspan increases cap by ~1 point per inch (not perfectly linear)
+  - Height decreases base cap (taller = lower base)
+  - Weight also affects cap (needs modifier system to implement)
+  - Current implementation: baseline weight (270 lbs) for all heights
 
 ---
 

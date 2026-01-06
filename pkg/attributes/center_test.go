@@ -330,11 +330,11 @@ func TestDrivingDunk(t *testing.T) {
 		wingspanInches int
 		want           int
 	}{
-		// 6'7" height - wingspan variations (weight doesn't matter at this height)
+		// 6'7" height - wingspan variations
 		{
-			name:           "6'7\" with 6'7\" wingspan (minimum)",
+			name:           "6'7\" with 6'7\" wingspan",
 			heightInches:   MustLengthToInches("6'7"),
-			weightLbs:      270, // tested weight
+			weightLbs:      270,
 			wingspanInches: MustLengthToInches("6'7"),
 			want:           95,
 		},
@@ -353,13 +353,212 @@ func TestDrivingDunk(t *testing.T) {
 			want:           98,
 		},
 		{
-			name:           "6'7\" with 7'1\" wingspan (maximum tested)",
+			name:           "6'7\" with 7'1\" wingspan",
 			heightInches:   MustLengthToInches("6'7"),
 			weightLbs:      270,
 			wingspanInches: MustLengthToInches("7'1"),
 			want:           99,
 		},
-		// TODO: Test other heights to find full pattern
+		// 6'8" height - wingspan variations
+		{
+			name:           "6'8\" with 6'8\" wingspan",
+			heightInches:   MustLengthToInches("6'8"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'8"),
+			want:           94,
+		},
+		{
+			name:           "6'8\" with 6'10\" wingspan",
+			heightInches:   MustLengthToInches("6'8"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'10"),
+			want:           96,
+		},
+		{
+			name:           "6'8\" with 7'0\" wingspan",
+			heightInches:   MustLengthToInches("6'8"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'0"),
+			want:           99,
+		},
+		// 6'9" height - wingspan variations
+		{
+			name:           "6'9\" with 6'9\" wingspan",
+			heightInches:   MustLengthToInches("6'9"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'9"),
+			want:           92,
+		},
+		{
+			name:           "6'9\" with 7'0\" wingspan",
+			heightInches:   MustLengthToInches("6'9"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'0"),
+			want:           95,
+		},
+		{
+			name:           "6'9\" with 7'3\" wingspan",
+			heightInches:   MustLengthToInches("6'9"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           99,
+		},
+		// 6'10" height - wingspan variations
+		{
+			name:           "6'10\" with 6'10\" wingspan",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'10"),
+			want:           90,
+		},
+		{
+			name:           "6'10\" with 7'1\" wingspan",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           93,
+		},
+		{
+			name:           "6'10\" with 7'4\" wingspan",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'4"),
+			want:           96,
+		},
+		// 6'11" height - wingspan variations
+		{
+			name:           "6'11\" with 6'11\" wingspan",
+			heightInches:   MustLengthToInches("6'11"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'11"),
+			want:           86,
+		},
+		{
+			name:           "6'11\" with 7'2\" wingspan",
+			heightInches:   MustLengthToInches("6'11"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'2"),
+			want:           89,
+		},
+		{
+			name:           "6'11\" with 7'5\" wingspan",
+			heightInches:   MustLengthToInches("6'11"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           92,
+		},
+		// 7'0" height - wingspan variations
+		{
+			name:           "7'0\" with 7'0\" wingspan",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'0"),
+			want:           83,
+		},
+		{
+			name:           "7'0\" with 7'3\" wingspan",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           86,
+		},
+		{
+			name:           "7'0\" with 7'6\" wingspan",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'6"),
+			want:           89,
+		},
+		// 7'1" height - wingspan variations
+		{
+			name:           "7'1\" with 7'1\" wingspan",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           77,
+		},
+		{
+			name:           "7'1\" with 7'4\" wingspan",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'4"),
+			want:           80,
+		},
+		{
+			name:           "7'1\" with 7'7\" wingspan",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'7"),
+			want:           82,
+		},
+		// 7'2" height - wingspan variations
+		{
+			name:           "7'2\" with 7'2\" wingspan",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'2"),
+			want:           72,
+		},
+		{
+			name:           "7'2\" with 7'5\" wingspan",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'5"),
+			want:           74,
+		},
+		{
+			name:           "7'2\" with 7'8\" wingspan",
+			heightInches:   MustLengthToInches("7'2"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'8"),
+			want:           77,
+		},
+		// 7'3" height - wingspan variations
+		{
+			name:           "7'3\" with 7'3\" wingspan",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'3"),
+			want:           68,
+		},
+		{
+			name:           "7'3\" with 7'6\" wingspan",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'6"),
+			want:           70,
+		},
+		{
+			name:           "7'3\" with 7'8\" wingspan",
+			heightInches:   MustLengthToInches("7'3"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'8"),
+			want:           72,
+		},
+		// 7'4" height - wingspan variations
+		{
+			name:           "7'4\" with 7'4\" wingspan",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'4"),
+			want:           66,
+		},
+		{
+			name:           "7'4\" with 7'7\" wingspan",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'7"),
+			want:           68,
+		},
+		{
+			name:           "7'4\" with 7'10\" wingspan",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'10"),
+			want:           70,
+		},
+		// NOTE: These tests use baseline weight (270). Weight also affects this attribute.
+		// TODO: Add weight variation tests once modifier system is implemented
 	}
 
 	for _, tt := range tests {

@@ -226,22 +226,172 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 }
 
 // DrivingDunk calculates the Driving Dunk attribute cap for a Center.
-// TODO: Implement based on testing data
+// NOTE: Weight also affects this attribute - current implementation uses baseline weight.
+// TODO: Implement weight modifiers (additive system: height_base + wingspan_modifier + weight_modifier)
 func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
+	// Current implementation: wingspan variations at baseline weight for each height
 	switch heightInches {
-	case MustLengthToInches("6'7"):
-		switch weightLbs {
-		default: // weight doesn't matter for this one here
-			switch wingspanInches {
-			case MustLengthToInches("7'1"):
-				return 99
-			case MustLengthToInches("6'9"):
-				return 98
-			case MustLengthToInches("6'8"):
-				return 97
-			case MustLengthToInches("6'7"):
-				return 95
-			}
+	case MustLengthToInches("6'7"): // 79"
+		switch wingspanInches {
+		case MustLengthToInches("6'7"):
+			return 95
+		case MustLengthToInches("6'8"):
+			return 97
+		case MustLengthToInches("6'9"):
+			return 98
+		case MustLengthToInches("7'1"):
+			return 99
+		}
+	case MustLengthToInches("6'8"): // 80"
+		switch wingspanInches {
+		case MustLengthToInches("6'8"):
+			return 94
+		case MustLengthToInches("6'9"):
+			return 95
+		case MustLengthToInches("6'10"):
+			return 96
+		case MustLengthToInches("6'11"):
+			return 98
+		case MustLengthToInches("7'0"):
+			return 99
+		case MustLengthToInches("7'2"):
+			return 99
+		}
+	case MustLengthToInches("6'9"): // 81"
+		switch wingspanInches {
+		case MustLengthToInches("6'9"):
+			return 92
+		case MustLengthToInches("6'10"):
+			return 93
+		case MustLengthToInches("6'11"):
+			return 94
+		case MustLengthToInches("7'0"):
+			return 95
+		case MustLengthToInches("7'1"):
+			return 96
+		case MustLengthToInches("7'2"):
+			return 98
+		case MustLengthToInches("7'3"):
+			return 99
+		}
+	case MustLengthToInches("6'10"): // 82"
+		switch wingspanInches {
+		case MustLengthToInches("6'10"):
+			return 90
+		case MustLengthToInches("6'11"):
+			return 91
+		case MustLengthToInches("7'0"):
+			return 92
+		case MustLengthToInches("7'1"):
+			return 93
+		case MustLengthToInches("7'2"):
+			return 94
+		case MustLengthToInches("7'3"):
+			return 95
+		case MustLengthToInches("7'4"):
+			return 96
+		}
+	case MustLengthToInches("6'11"): // 83"
+		switch wingspanInches {
+		case MustLengthToInches("6'11"):
+			return 86
+		case MustLengthToInches("7'0"):
+			return 87
+		case MustLengthToInches("7'1"):
+			return 88
+		case MustLengthToInches("7'2"):
+			return 89
+		case MustLengthToInches("7'3"):
+			return 90
+		case MustLengthToInches("7'4"):
+			return 91
+		case MustLengthToInches("7'5"):
+			return 92
+		}
+	case MustLengthToInches("7'0"): // 84"
+		switch wingspanInches {
+		case MustLengthToInches("7'0"):
+			return 83
+		case MustLengthToInches("7'1"):
+			return 84
+		case MustLengthToInches("7'2"):
+			return 85
+		case MustLengthToInches("7'3"):
+			return 86
+		case MustLengthToInches("7'4"):
+			return 87
+		case MustLengthToInches("7'5"):
+			return 88
+		case MustLengthToInches("7'6"):
+			return 89
+		}
+	case MustLengthToInches("7'1"): // 85"
+		switch wingspanInches {
+		case MustLengthToInches("7'1"):
+			return 77
+		case MustLengthToInches("7'2"):
+			return 78
+		case MustLengthToInches("7'3"):
+			return 79
+		case MustLengthToInches("7'4"):
+			return 80
+		case MustLengthToInches("7'5"):
+			return 81
+		case MustLengthToInches("7'6"):
+			return 82
+		case MustLengthToInches("7'7"):
+			return 82
+		}
+	case MustLengthToInches("7'2"): // 86"
+		switch wingspanInches {
+		case MustLengthToInches("7'2"):
+			return 72
+		case MustLengthToInches("7'3"):
+			return 72
+		case MustLengthToInches("7'4"):
+			return 73
+		case MustLengthToInches("7'5"):
+			return 74
+		case MustLengthToInches("7'6"):
+			return 75
+		case MustLengthToInches("7'7"):
+			return 76
+		case MustLengthToInches("7'8"):
+			return 77
+		}
+	case MustLengthToInches("7'3"): // 87"
+		switch wingspanInches {
+		case MustLengthToInches("7'3"):
+			return 68
+		case MustLengthToInches("7'4"):
+			return 69
+		case MustLengthToInches("7'5"):
+			return 69
+		case MustLengthToInches("7'6"):
+			return 70
+		case MustLengthToInches("7'7"):
+			return 71
+		case MustLengthToInches("7'8"):
+			return 72
+		case MustLengthToInches("7'9"):
+			return 72
+		}
+	case MustLengthToInches("7'4"): // 88"
+		switch wingspanInches {
+		case MustLengthToInches("7'4"):
+			return 66
+		case MustLengthToInches("7'5"):
+			return 67
+		case MustLengthToInches("7'6"):
+			return 68
+		case MustLengthToInches("7'7"):
+			return 68
+		case MustLengthToInches("7'8"):
+			return 69
+		case MustLengthToInches("7'9"):
+			return 70
+		case MustLengthToInches("7'10"):
+			return 70
 		}
 	}
 	return 0
