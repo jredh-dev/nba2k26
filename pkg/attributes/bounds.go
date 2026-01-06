@@ -15,9 +15,9 @@ type PhysicalBounds struct {
 	DefaultWingspan string // The default wingspan for this height in-game
 }
 
-// CenterHeightBounds maps each valid center height to its weight/wingspan constraints
+// CenterBounds maps each valid center height to its weight/wingspan constraints
 // This data is discovered through in-game testing
-var CenterHeightBounds = map[string]PhysicalBounds{
+var CenterBounds = map[string]PhysicalBounds{
 	"6'7\"": {
 		MinWeight:       215,
 		MaxWeight:       270,
@@ -102,7 +102,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 
 // GetBounds returns the physical bounds for a given height, or nil if height is invalid
 func GetBounds(height string) *PhysicalBounds {
-	if bounds, ok := CenterHeightBounds[height]; ok {
+	if bounds, ok := CenterBounds[height]; ok {
 		return &bounds
 	}
 	return nil
