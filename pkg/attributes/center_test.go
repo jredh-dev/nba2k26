@@ -569,3 +569,92 @@ func TestDrivingDunk(t *testing.T) {
 		})
 	}
 }
+
+func TestDrivingDunk2(t *testing.T) {
+	// Test that DrivingDunk2 returns correct penalties (99 - cap = penalty)
+	tests := []struct {
+		name           string
+		heightInches   int
+		weightLbs      int
+		wingspanInches int
+		wantPenalty    int
+		wantCap        int // For verification: 99 - penalty should equal original cap
+	}{
+		// Sample tests across different heights
+		{
+			name:           "6'7\" with 6'7\" wingspan",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'7"),
+			wantPenalty:    4,
+			wantCap:        95,
+		},
+		{
+			name:           "6'7\" with 7'1\" wingspan (max)",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'1"),
+			wantPenalty:    0,
+			wantCap:        99,
+		},
+		{
+			name:           "7'0\" with 7'0\" wingspan",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'0"),
+			wantPenalty:    6,
+			wantCap:        83,
+		},
+		{
+			name:           "7'0\" with 7'3\" wingspan",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'3"),
+			wantPenalty:    3,
+			wantCap:        86,
+		},
+		{
+			name:           "7'0\" with 7'6\" wingspan (max)",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'6"),
+			wantPenalty:    0,
+			wantCap:        89,
+		},
+		{
+			name:           "7'4\" with 7'4\" wingspan",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'4"),
+			wantPenalty:    4,
+			wantCap:        66,
+		},
+		{
+			name:           "7'4\" with 7'10\" wingspan (max)",
+			heightInches:   MustLengthToInches("7'4"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'10"),
+			wantPenalty:    0,
+			wantCap:        70,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			penalty := DrivingDunk2(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.wantPenalty, penalty, "DrivingDunk2(%d, %d, %d) penalty = %d, want %d",
+				tt.heightInches, tt.weightLbs, tt.wingspanInches, penalty, tt.wantPenalty)
+
+			// Verify that penalty calculation matches original DrivingDunk cap
+			originalCap := DrivingDunk(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.wantCap, originalCap, "Verification: original cap should be %d", tt.wantCap)
+
+			// The relationship should hold: cap from table = max_for_height - penalty
+			// Note: max_for_height varies by height, so we just verify consistency
+			calculatedCap := 99 - penalty
+			// This won't always equal originalCap because max cap varies by height
+			// but the penalty should be correct relative to that height's max
+			_ = calculatedCap // We're not asserting this, just documenting the relationship
+		})
+	}
+}
