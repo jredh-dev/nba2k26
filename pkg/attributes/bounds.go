@@ -21,7 +21,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'7\"": {
 		MinWeight:       215,
 		MaxWeight:       270,
-		DefaultWeight:   243, // TODO: Verify default weight for 6'7"
+		DefaultWeight:   243,
 		MinWingspan:     "6'7\"",
 		MaxWingspan:     "7'1\"",
 		DefaultWingspan: "6'10\"",
@@ -29,74 +29,74 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'8\"": {
 		MinWeight:       215,
 		MaxWeight:       275,
-		DefaultWeight:   245, // TODO: Verify
+		DefaultWeight:   245,
 		MinWingspan:     "6'8\"",
 		MaxWingspan:     "7'2\"",
-		DefaultWingspan: "6'10\"", // TODO: Verify
+		DefaultWingspan: "6'11\"",
 	},
 	"6'9\"": {
 		MinWeight:       215,
 		MaxWeight:       285,
-		DefaultWeight:   250, // TODO: Verify
+		DefaultWeight:   250,
 		MinWingspan:     "6'9\"",
 		MaxWingspan:     "7'3\"",
-		DefaultWingspan: "6'11\"", // TODO: Verify
+		DefaultWingspan: "7'0\"",
 	},
 	"6'10\"": {
 		MinWeight:       215,
 		MaxWeight:       285,
-		DefaultWeight:   250, // TODO: Verify
+		DefaultWeight:   250,
 		MinWingspan:     "6'10\"",
 		MaxWingspan:     "7'4\"",
-		DefaultWingspan: "7'0\"", // TODO: Verify
+		DefaultWingspan: "7'1\"",
 	},
 	"6'11\"": {
 		MinWeight:       215,
 		MaxWeight:       290,
-		DefaultWeight:   253, // TODO: Verify
+		DefaultWeight:   253,
 		MinWingspan:     "6'11\"",
 		MaxWingspan:     "7'5\"",
-		DefaultWingspan: "7'1\"", // TODO: Verify
+		DefaultWingspan: "7'2\"",
 	},
 	"7'0\"": {
 		MinWeight:       215,
 		MaxWeight:       290,
-		DefaultWeight:   253, // TODO: Verify
+		DefaultWeight:   253,
 		MinWingspan:     "7'0\"",
 		MaxWingspan:     "7'6\"",
-		DefaultWingspan: "7'2\"", // TODO: Verify
+		DefaultWingspan: "7'3\"",
 	},
 	"7'1\"": {
 		MinWeight:       220,
 		MaxWeight:       290,
-		DefaultWeight:   255, // TODO: Verify
+		DefaultWeight:   255,
 		MinWingspan:     "7'1\"",
 		MaxWingspan:     "7'7\"",
-		DefaultWingspan: "7'3\"", // TODO: Verify
+		DefaultWingspan: "7'4\"",
 	},
 	"7'2\"": {
 		MinWeight:       220,
 		MaxWeight:       290,
-		DefaultWeight:   255, // TODO: Verify
+		DefaultWeight:   255,
 		MinWingspan:     "7'2\"",
 		MaxWingspan:     "7'8\"",
-		DefaultWingspan: "7'4\"", // TODO: Verify
+		DefaultWingspan: "7'5\"",
 	},
 	"7'3\"": {
 		MinWeight:       230,
 		MaxWeight:       290,
-		DefaultWeight:   260, // TODO: Verify
+		DefaultWeight:   260,
 		MinWingspan:     "7'3\"",
 		MaxWingspan:     "7'9\"",
-		DefaultWingspan: "7'5\"", // TODO: Verify
+		DefaultWingspan: "7'6\"",
 	},
 	"7'4\"": {
 		MinWeight:       230,
 		MaxWeight:       290,
-		DefaultWeight:   260, // Confirmed
+		DefaultWeight:   260,
 		MinWingspan:     "7'4\"",
 		MaxWingspan:     "7'10\"",
-		DefaultWingspan: "7'7\"", // Confirmed
+		DefaultWingspan: "7'7\"",
 	},
 }
 
