@@ -55,9 +55,63 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 	switch heightInches {
 	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
 		return 99
-	case MustLengthToInches("7'2"): // 86" (7'2")
-		// At 7'2", weight affects the cap (71-84 range)
-		// Pattern: ~5 lbs per point (wider intervals than 7'3"/7'4")
+	case MustLengthToInches("6'8"): // 80" (6'8")
+		return 99
+	case MustLengthToInches("6'9"): // 81" (6'9")
+		// Weight doesn't affect cap at this height (always 98)
+		return 98
+	case MustLengthToInches("6'10"): // 82" (6'10")
+		// Weight doesn't affect cap at this height (always 96)
+		return 96
+	case MustLengthToInches("6'11"): // 83" (6'11")
+		// Weight affects cap at this height (92-94 range)
+		switch {
+		case weightLbs <= 250:
+			return 94
+		case weightLbs <= 288:
+			return 93
+		default: // >= 289 lbs (max is 290)
+			return 92
+		}
+	case MustLengthToInches("7'0"): // 84" (7'0")
+		// Weight affects cap at this height (89-93 range)
+		switch {
+		case weightLbs <= 225:
+			return 93
+		case weightLbs <= 244:
+			return 92
+		case weightLbs <= 262:
+			return 91
+		case weightLbs <= 280:
+			return 90
+		default: // >= 281 lbs (max is 290)
+			return 89
+		}
+	case MustLengthToInches("7'1"): // 85" (7'1")
+		// Weight affects cap at this height (77-86 range)
+		switch {
+		case weightLbs <= 226:
+			return 86
+		case weightLbs <= 234:
+			return 85
+		case weightLbs <= 242:
+			return 84
+		case weightLbs <= 249:
+			return 83
+		case weightLbs <= 257:
+			return 82
+		case weightLbs <= 264:
+			return 81
+		case weightLbs <= 272:
+			return 80
+		case weightLbs <= 280:
+			return 79
+		case weightLbs <= 287:
+			return 78
+		default: // >= 288 lbs (max is 290)
+			return 77
+		}
+	case MustLengthToInches("7'2"):
 		switch {
 		case weightLbs <= 223:
 			return 84
@@ -166,11 +220,6 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 		default:
 			return 0 // Invalid weight
 		}
-	// TODO: Add intermediate heights as you discover them
-	// case MustLengthToInches("6'8"):
-	//     return ??
-	// case MustLengthToInches("6'9"):
-	//     return ??
 	default:
 		return 0 // Not yet tested
 	}
@@ -179,7 +228,16 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 // DrivingDunk calculates the Driving Dunk attribute cap for a Center.
 // TODO: Implement based on testing data
 func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
-	// Stub: returns 0 until pattern is discovered
+	switch heightInches {
+	case MustLengthToInches("6'7"):
+		switch weightLbs {
+		case 270:
+			switch wingspanInches {
+			case MustLengthToInches("7'1"):
+				return 99
+			}
+		}
+	}
 	return 0
 }
 

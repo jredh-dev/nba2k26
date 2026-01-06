@@ -24,34 +24,23 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
   - 7'4"H 290LBS 7'10"WS → 99
   - 7'0"H 250LBS 7'4"WS → 99
 
-### Driving Layup 🔄 (In Progress)
-- **Pattern**: Height-based + weight affects at tall heights
+### Driving Layup ✅ (COMPLETE!)
+- **Pattern**: Height is primary factor, weight affects caps at 6'11" and taller
 - **Confirmed Values**:
-  - 6'7"H (any weight) → 99
-  - 7'2"H + weight variations:
-    - 223 lbs → 84
-    - 244 lbs → 80
-    - 269 lbs → 75
-    - 290 lbs → 71
-    - (Full range: 71-84, **13 point spread**)
-  - 7'3"H + weight variations:
-    - 230 lbs → 80
-    - 250 lbs → 75
-    - 270 lbs → 70
-    - 290 lbs → 64
-    - (Full range: 64-80, **16 point spread**)
-  - 7'4"H + weight variations:
-    - 230 lbs → 77
-    - 250 lbs → 75
-    - 270 lbs → 67
-    - 290 lbs → 62
-    - (Full range: 62-77, **15 point spread**)
-- **Need to Test**: Heights 6'8" through 7'1" to understand when weight starts mattering
-- **Pattern Analysis**: 
-  - At 7'2": ~5 lbs per cap point (67 lbs = 13 points)
-  - At 7'3": ~4 lbs per cap point (60 lbs = 16 points)
-  - At 7'4": ~4 lbs per cap point (60 lbs = 15 points)
-  - **Observation**: Wider intervals at 7'2", pattern NOT perfectly consistent across heights
+  - 6'7"H → 99 (weight independent)
+  - 6'8"H → 99 (weight independent)
+  - 6'9"H → 98 (weight independent)
+  - 6'10"H → 96 (weight independent)
+  - 6'11"H → 92-94 (weight dependent, 3 point range)
+  - 7'0"H → 89-93 (weight dependent, 5 point range)
+  - 7'1"H → 77-86 (weight dependent, 10 point range)
+  - 7'2"H → 71-84 (weight dependent, 13 point range)
+  - 7'3"H → 64-80 (weight dependent, 16 point range)
+  - 7'4"H → 62-77 (weight dependent, 15 point range)
+- **Key Insights**: 
+  - Weight doesn't matter until 6'11"
+  - Weight impact increases dramatically with height
+  - Taller players have much wider cap ranges based on weight
 
 ---
 

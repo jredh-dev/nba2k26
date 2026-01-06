@@ -136,6 +136,79 @@ func TestDrivingLayup(t *testing.T) {
 			wingspanInches: MustLengthToInches(GetBounds(CENTER_MIN_HEIGHT).MinWingspan),
 			want:           99,
 		},
+		{
+			name:           "6'8\" (always 99)",
+			heightInches:   MustLengthToInches("6'8"),
+			weightLbs:      240,
+			wingspanInches: MustLengthToInches("6'8"),
+			want:           99,
+		},
+		{
+			name:           "6'9\" (always 98)",
+			heightInches:   MustLengthToInches("6'9"),
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches("6'9"),
+			want:           98,
+		},
+		{
+			name:           "6'10\" (always 96)",
+			heightInches:   MustLengthToInches("6'10"),
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches("6'10"),
+			want:           96,
+		},
+		// 6'11" height - weight variations
+		{
+			name:           "6'11\" at 215 lbs (minimum weight)",
+			heightInches:   MustLengthToInches("6'11"),
+			weightLbs:      215,
+			wingspanInches: MustLengthToInches("6'11"),
+			want:           94,
+		},
+		{
+			name:           "6'11\" at 290 lbs (maximum weight)",
+			heightInches:   MustLengthToInches("6'11"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("6'11"),
+			want:           92,
+		},
+		// 7'0" height - weight variations
+		{
+			name:           "7'0\" at 215 lbs (minimum weight)",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      215,
+			wingspanInches: MustLengthToInches("7'0"),
+			want:           93,
+		},
+		{
+			name:           "7'0\" at 290 lbs (maximum weight)",
+			heightInches:   MustLengthToInches("7'0"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'0"),
+			want:           89,
+		},
+		// 7'1" height - weight variations
+		{
+			name:           "7'1\" at 220 lbs (minimum weight)",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      220,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           86,
+		},
+		{
+			name:           "7'1\" at 257 lbs",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      257,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           82,
+		},
+		{
+			name:           "7'1\" at 290 lbs (maximum weight)",
+			heightInches:   MustLengthToInches("7'1"),
+			weightLbs:      290,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           77,
+		},
 		// 7'2" height - weight variations (CONFIRMED)
 		{
 			name:           "7'2\" at 223 lbs (lightest tested)",
