@@ -1,36 +1,47 @@
 # Quick Testing Reference
 
-## 🎯 CURRENT PRIORITY: Driving Dunk (Wingspan Test)
+## 🎯 CURRENT PRIORITY: Driving Dunk Weight Modifier Testing
 
 ✅ **Driving Layup is COMPLETE** (all 10 heights, 6'7" - 7'4")
+✅ **Driving Dunk wingspan data is COMPLETE** (all 10 heights, baseline weight)
 
-### Driving Dunk - Wingspan Impact Test
+### Goal: Determine Weight Modifier Rate
 
-**Question**: Does wingspan affect Driving Dunk caps?
+We need to test how weight affects Driving Dunk caps to implement an additive modifier system.
 
-**Test at 7'0" height, 250 lbs, varying wingspan:**
+**Hypothesis**: `Final Cap = Base(height) + WingspanModifier + WeightModifier`
 
-| Test # | Height | Weight | Wingspan | Driving Dunk Cap? |
-|--------|--------|--------|----------|-------------------|
-| 1      | 7'0"   | 250    | 7'0"     | ❓ (minimum wingspan) |
-| 2      | 7'0"   | 250    | 7'2"     | ❓ |
-| 3      | 7'0"   | 250    | 7'4"     | ❓ |
-| 4      | 7'0"   | 250    | 7'6"     | ❓ (maximum wingspan) |
+### Test at 7'0" Height, 7'3" Wingspan
 
-**What we're looking for:**
-- ✅ If all 4 values are **the same** → Wingspan doesn't matter (like Driving Layup)
-- ⚠️ If values are **different** → Wingspan DOES matter, need systematic testing
+**Known baseline**: 7'0"H, 270LBS, 7'3"WS → **86**
 
-### If Wingspan Matters (Values Different):
+**Test these weights:**
 
-Test minimum/maximum builds to establish range:
+| Test # | Height | Weight | Wingspan | Expected Baseline | Actual Cap? | Weight Effect |
+|--------|--------|--------|----------|-------------------|-------------|---------------|
+| 1      | 7'0"   | 220    | 7'3"     | 86                | ❓          | ? |
+| 2      | 7'0"   | 240    | 7'3"     | 86                | ❓          | ? |
+| 3      | 7'0"   | 260    | 7'3"     | 86                | ❓          | ? |
+| **4**  | **7'0"**   | **270**    | **7'3"**     | **86**                | **86 ✅**      | **0 (baseline)** |
+| 5      | 7'0"   | 280    | 7'3"     | 86                | ❓          | ? |
+| 6      | 7'0"   | 290    | 7'3"     | 86                | ❓          | ? |
 
-| Build Type | Height | Weight | Wingspan | Driving Dunk Cap? |
-|------------|--------|--------|----------|-------------------|
-| Min build  | 6'7"   | 215    | 6'7"     | ❓ |
-| Max build  | 7'4"   | 290    | 7'10"    | ❓ |
+**Analysis**: 
+- If 220 lbs → 90 cap, then weight modifier = +4 for -50 lbs (baseline is 270)
+- This gives us the rate: **+4 / 50 lbs = +1 per 12.5 lbs lighter**
+- Or: **-1 per 12.5 lbs heavier**
 
-Then test systematically like we did with Driving Layup.
+### Verification Tests (if modifier system works)
+
+**Test at 6'7" height to verify consistency:**
+
+| Height | Weight | Wingspan | Current Known | With Weight Modifier? |
+|--------|--------|----------|---------------|------------------------|
+| 6'7"   | 220    | 6'9"     | ?             | 98 + modifier          |
+| 6'7"   | 270    | 6'9"     | 98 ✅         | 98 (baseline)          |
+| 6'7"   | 290    | 6'9"     | ?             | 98 + modifier          |
+
+If modifiers match, system is confirmed additive!
 
 ---
 
