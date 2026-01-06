@@ -21,10 +21,10 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'7\"": {
 		MinWeight:       215,
 		MaxWeight:       270,
-		DefaultWeight:   240, // TODO: Verify default weight for 6'7"
+		DefaultWeight:   243, // TODO: Verify default weight for 6'7"
 		MinWingspan:     "6'7\"",
 		MaxWingspan:     "7'1\"",
-		DefaultWingspan: "6'9\"", // TODO: Verify default wingspan for 6'7"
+		DefaultWingspan: "6'10\"",
 	},
 	"6'8\"": {
 		MinWeight:       215,
@@ -53,7 +53,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'11\"": {
 		MinWeight:       215,
 		MaxWeight:       290,
-		DefaultWeight:   255, // TODO: Verify
+		DefaultWeight:   253, // TODO: Verify
 		MinWingspan:     "6'11\"",
 		MaxWingspan:     "7'5\"",
 		DefaultWingspan: "7'1\"", // TODO: Verify
@@ -61,7 +61,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"7'0\"": {
 		MinWeight:       215,
 		MaxWeight:       290,
-		DefaultWeight:   255, // TODO: Verify
+		DefaultWeight:   253, // TODO: Verify
 		MinWingspan:     "7'0\"",
 		MaxWingspan:     "7'6\"",
 		DefaultWingspan: "7'2\"", // TODO: Verify
@@ -69,7 +69,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"7'1\"": {
 		MinWeight:       220,
 		MaxWeight:       290,
-		DefaultWeight:   260, // TODO: Verify
+		DefaultWeight:   255, // TODO: Verify
 		MinWingspan:     "7'1\"",
 		MaxWingspan:     "7'7\"",
 		DefaultWingspan: "7'3\"", // TODO: Verify
@@ -77,7 +77,7 @@ var CenterHeightBounds = map[string]PhysicalBounds{
 	"7'2\"": {
 		MinWeight:       220,
 		MaxWeight:       290,
-		DefaultWeight:   260, // TODO: Verify
+		DefaultWeight:   255, // TODO: Verify
 		MinWingspan:     "7'2\"",
 		MaxWingspan:     "7'8\"",
 		DefaultWingspan: "7'4\"", // TODO: Verify
