@@ -126,7 +126,8 @@ func main() {
 	}
 
 	// Test our functions against scraped data
-	fmt.Println("=== Testing Our Functions vs Scraped Data ===\n")
+	fmt.Println("=== Testing Our Functions vs Scraped Data ===")
+	fmt.Println()
 
 	funcTests := []struct {
 		name      string

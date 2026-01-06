@@ -48,181 +48,103 @@ func PassAccuracy(heightInches, weightLbs, wingspanInches int) int {
 // Testing notes:
 // - At minimum height (79" / 6'7"): cap is 99 (weight doesn't matter)
 // - At maximum height (88" / 7'4"): cap is 62-77 (weight DOES matter: heavier = lower)
-// - Pattern: Height is the primary factor, weight affects at maximum height
-// - Wingspan doesn't appear to affect this attribute
-func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
-	// Height-based caps (discovered through testing)
-	switch heightInches {
-	case MustLengthToInches(CENTER_MIN_HEIGHT): // 79" (6'7")
-		return 99
-	case MustLengthToInches("6'8"): // 80" (6'8")
-		return 99
-	case MustLengthToInches("6'9"): // 81" (6'9")
-		// Weight doesn't affect cap at this height (always 98)
-		return 98
-	case MustLengthToInches("6'10"): // 82" (6'10")
-		// Weight doesn't affect cap at this height (always 96)
-		return 96
-	case MustLengthToInches("6'11"): // 83" (6'11")
-		// Weight affects cap at this height (92-94 range)
-		switch {
-		case weightLbs <= 250:
-			return 94
-		case weightLbs <= 288:
-			return 93
-		default: // >= 289 lbs (max is 290)
-			return 92
-		}
-	case MustLengthToInches("7'0"): // 84" (7'0")
-		// Weight affects cap at this height (89-93 range)
-		switch {
-		case weightLbs <= 225:
-			return 93
-		case weightLbs <= 244:
-			return 92
-		case weightLbs <= 262:
-			return 91
-		case weightLbs <= 280:
-			return 90
-		default: // >= 281 lbs (max is 290)
-			return 89
-		}
-	case MustLengthToInches("7'1"): // 85" (7'1")
-		// Weight affects cap at this height (77-86 range)
-		switch {
-		case weightLbs <= 226:
-			return 86
-		case weightLbs <= 234:
-			return 85
-		case weightLbs <= 242:
-			return 84
-		case weightLbs <= 249:
-			return 83
-		case weightLbs <= 257:
-			return 82
-		case weightLbs <= 264:
-			return 81
-		case weightLbs <= 272:
-			return 80
-		case weightLbs <= 280:
-			return 79
-		case weightLbs <= 287:
-			return 78
-		default: // >= 288 lbs (max is 290)
-			return 77
-		}
-	case MustLengthToInches("7'2"):
-		switch {
-		case weightLbs <= 223:
-			return 84
-		case weightLbs <= 228:
-			return 83
-		case weightLbs <= 233:
-			return 82
-		case weightLbs <= 239:
-			return 81
-		case weightLbs <= 244:
-			return 80
-		case weightLbs <= 249:
-			return 79
-		case weightLbs <= 254:
-			return 78
-		case weightLbs <= 259:
-			return 77
-		case weightLbs <= 264:
-			return 76
-		case weightLbs <= 269:
-			return 75
-		case weightLbs <= 275:
-			return 74
-		case weightLbs <= 280:
-			return 73
-		case weightLbs <= 285:
-			return 72
-		default: // >= 286 lbs (max is 290)
-			return 71
-		}
-	case MustLengthToInches("7'3"): // 87" (7'3")
-		// At 7'3", weight affects the cap (64-80 range)
-		// Min weight (230 lbs) and 231 lbs both return 80
-		switch {
-		case weightLbs <= 231:
-			return 80
-		case weightLbs <= 234:
-			return 79
-		case weightLbs <= 238:
-			return 78
-		case weightLbs <= 242:
-			return 77
-		case weightLbs <= 246:
-			return 76
-		case weightLbs <= 250:
-			return 75
-		case weightLbs <= 254:
-			return 74
-		case weightLbs <= 258:
-			return 73
-		case weightLbs <= 262:
-			return 72
-		case weightLbs <= 266:
-			return 71
-		case weightLbs <= 270:
-			return 70
-		case weightLbs <= 274:
-			return 69
-		case weightLbs <= 277:
-			return 68
-		case weightLbs <= 281:
-			return 67
-		case weightLbs <= 285:
-			return 66
-		case weightLbs <= 289:
-			return 65
-		case weightLbs == 290:
-			return 64
-		default:
-			return 0 // Invalid weight
-		}
-	case MustLengthToInches(CENTER_MAX_HEIGHT):
-		switch {
-		case weightLbs <= 231:
-			return 77
-		case weightLbs <= 235:
-			return 76
-		case weightLbs <= 239:
-			return 75
-		case weightLbs <= 243:
-			return 74
-		case weightLbs <= 247:
-			return 73
-		case weightLbs <= 251:
-			return 72
-		case weightLbs <= 256:
-			return 71
-		case weightLbs <= 260:
-			return 70
-		case weightLbs <= 264:
-			return 69
-		case weightLbs <= 268:
-			return 68
-		case weightLbs <= 272:
-			return 67
-		case weightLbs <= 276:
-			return 66
-		case weightLbs <= 280:
-			return 65
-		case weightLbs <= 285:
-			return 64
-		case weightLbs <= 289:
-			return 63
-		case weightLbs == 290:
-			return 62
-		default:
-			return 0 // Invalid weight
-		}
-	default:
-		return 0 // Not yet tested
+// - Pattern: Height is primary factor, weight creates penalties at 6'11"+
+// - Wingspan does not affect this attribute
+// - Data-driven implementation based on NBA2KLab API scraped data (903 builds)
+func DrivingLayup(heightInches, weightLbs, _ int) int {
+	// Lookup table generated from scraped data
+	// Heights 6'7"-6'10" are weight-independent
+	// Heights 6'11"+ have weight-dependent penalties
+
+	type weightThreshold struct {
+		maxWeight int
+		value     int
 	}
+
+	// Weight-dependent heights use threshold tables
+	// Format: if weight <= maxWeight, return value (check in order)
+	lookupTable := map[int][]weightThreshold{
+		79: {{99999, 99}}, // 6'7": always 99
+		80: {{99999, 99}}, // 6'8": always 99
+		81: {{99999, 98}}, // 6'9": always 98
+		82: {{99999, 96}}, // 6'10": always 96
+		83: { // 6'11": 93-94 range
+			{250, 94},
+			{99999, 93},
+		},
+		84: { // 7'0": 90-93 range
+			{225, 93},
+			{240, 92},
+			{260, 91},
+			{99999, 90},
+		},
+		85: { // 7'1": 79-86 range
+			{225, 86},   // 220-225 = 86
+			{230, 85},   // 226-230 = 85
+			{240, 84},   // 231-240 = 84
+			{245, 83},   // 241-245 = 83
+			{260, 82},   // 246-260 = 82
+			{270, 80},   // 261-270 = 80-81 (265=80, 260=81 in data, use 80)
+			{99999, 79}, // 271+ = 79
+		},
+		86: { // 7'2": 73-84 range
+			{220, 84},
+			{225, 83},
+			{230, 82},
+			{235, 81},
+			{245, 80}, // 236-245 = 80
+			{250, 78},
+			{255, 77},
+			{260, 76},
+			{265, 75},
+			{275, 74}, // 266-275 = 74
+			{99999, 73},
+		},
+		87: { // 7'3": 64-80 range
+			{230, 80},
+			{235, 78},
+			{240, 77},
+			{245, 76},
+			{250, 75},
+			{255, 73},
+			{260, 72},
+			{265, 71},
+			{270, 70},
+			{275, 68},
+			{280, 67},
+			{285, 66},
+			{99999, 64},
+		},
+		88: { // 7'4": 62-77 range
+			{230, 77},
+			{235, 76},
+			{240, 74},
+			{245, 73},
+			{250, 72},
+			{255, 71},
+			{260, 70},
+			{265, 68},
+			{270, 67},
+			{275, 66},
+			{280, 65},
+			{285, 64},
+			{99999, 62},
+		},
+	}
+
+	thresholds, exists := lookupTable[heightInches]
+	if !exists {
+		return 0 // Invalid height
+	}
+
+	// Find first threshold where weight <= maxWeight
+	for _, t := range thresholds {
+		if weightLbs <= t.maxWeight {
+			return t.value
+		}
+	}
+
+	return 0 // Should never reach here if table is correct
 }
 
 // DrivingDunk calculates the Driving Dunk attribute cap for a Center.
@@ -294,9 +216,23 @@ func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
 	case MustLengthToInches("6'11"): // 83"
 		switch wingspanInches {
 		case MustLengthToInches("6'11"):
-			return 86
+			switch {
+			case weightLbs <= 290:
+				return 85
+			case weightLbs <= 268:
+				return 86
+			case weightLbs <= 225:
+				return 87
+			}
 		case MustLengthToInches("7'0"):
-			return 87
+			switch {
+			case weightLbs <= 290:
+				return 86
+			case weightLbs <= 271:
+				return 87
+			case weightLbs <= 229:
+				return 88
+			}
 		case MustLengthToInches("7'1"):
 			return 88
 		case MustLengthToInches("7'2"):
