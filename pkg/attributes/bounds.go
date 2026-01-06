@@ -124,6 +124,16 @@ func GetDefaultWeightForInches(heightInches int) int {
 	return GetDefaultWeight(heightStr)
 }
 
+// GetDefaultWingspan returns the default wingspan for a given height
+// Returns empty string if height is invalid
+func GetDefaultWingspan(height string) string {
+	bounds := GetBounds(height)
+	if bounds == nil {
+		return ""
+	}
+	return bounds.DefaultWingspan
+}
+
 // ValidateCenter checks if a height/weight/wingspan combination is valid for a Center
 func ValidateCenter(height, weight, wingspan string) bool {
 	bounds := GetBounds(height)

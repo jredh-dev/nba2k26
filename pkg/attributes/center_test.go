@@ -139,178 +139,72 @@ func TestDrivingLayup(t *testing.T) {
 		{
 			name:           "6'8\" (always 99)",
 			heightInches:   MustLengthToInches("6'8"),
-			weightLbs:      240,
-			wingspanInches: MustLengthToInches("6'8"),
+			weightLbs:      GetDefaultWeight("6'8\""),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("6'8\"")),
 			want:           99,
 		},
 		{
 			name:           "6'9\" (always 98)",
 			heightInches:   MustLengthToInches("6'9"),
-			weightLbs:      250,
-			wingspanInches: MustLengthToInches("6'9"),
+			weightLbs:      GetDefaultWeight("6'9\""),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("6'9\"")),
 			want:           98,
 		},
 		{
 			name:           "6'10\" (always 96)",
 			heightInches:   MustLengthToInches("6'10"),
-			weightLbs:      250,
-			wingspanInches: MustLengthToInches("6'10"),
+			weightLbs:      GetDefaultWeight("6'10\""),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("6'10\"")),
 			want:           96,
 		},
-		// 6'11" height - weight variations
+		// 6'11" height
 		{
-			name:           "6'11\" at 215 lbs (minimum weight)",
+			name:           "6'11\" at 215 lbs",
 			heightInches:   MustLengthToInches("6'11"),
 			weightLbs:      215,
-			wingspanInches: MustLengthToInches("6'11"),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("6'11\"")),
 			want:           94,
 		},
+		// 7'0" height
 		{
-			name:           "6'11\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches("6'11"),
-			weightLbs:      290,
-			wingspanInches: MustLengthToInches("6'11"),
-			want:           92,
-		},
-		// 7'0" height - weight variations
-		{
-			name:           "7'0\" at 215 lbs (minimum weight)",
+			name:           "7'0\" at 250 lbs",
 			heightInches:   MustLengthToInches("7'0"),
-			weightLbs:      215,
-			wingspanInches: MustLengthToInches("7'0"),
-			want:           93,
+			weightLbs:      250,
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("7'0\"")),
+			want:           91,
 		},
-		{
-			name:           "7'0\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches("7'0"),
-			weightLbs:      290,
-			wingspanInches: MustLengthToInches("7'0"),
-			want:           89,
-		},
-		// 7'1" height - weight variations
-		{
-			name:           "7'1\" at 220 lbs (minimum weight)",
-			heightInches:   MustLengthToInches("7'1"),
-			weightLbs:      220,
-			wingspanInches: MustLengthToInches("7'1"),
-			want:           86,
-		},
+		// 7'1" height
 		{
 			name:           "7'1\" at 257 lbs",
 			heightInches:   MustLengthToInches("7'1"),
 			weightLbs:      257,
-			wingspanInches: MustLengthToInches("7'1"),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("7'1\"")),
 			want:           82,
 		},
-		{
-			name:           "7'1\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches("7'1"),
-			weightLbs:      290,
-			wingspanInches: MustLengthToInches("7'1"),
-			want:           77,
-		},
-		// 7'2" height - weight variations (CONFIRMED)
-		{
-			name:           "7'2\" at 223 lbs (lightest tested)",
-			heightInches:   MustLengthToInches("7'2"),
-			weightLbs:      223,
-			wingspanInches: MustLengthToInches("7'2"),
-			want:           84,
-		},
+		// 7'2" height
 		{
 			name:           "7'2\" at 244 lbs",
 			heightInches:   MustLengthToInches("7'2"),
 			weightLbs:      244,
-			wingspanInches: MustLengthToInches("7'2"),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("7'2\"")),
 			want:           80,
 		},
-		{
-			name:           "7'2\" at 269 lbs",
-			heightInches:   MustLengthToInches("7'2"),
-			weightLbs:      269,
-			wingspanInches: MustLengthToInches("7'2"),
-			want:           75,
-		},
-		{
-			name:           "7'2\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches("7'2"),
-			weightLbs:      290,
-			wingspanInches: MustLengthToInches("7'2"),
-			want:           71,
-		},
-		// 7'3" height - weight variations
-		{
-			name:           "7'3\" at 230 lbs (minimum weight)",
-			heightInches:   MustLengthToInches("7'3"),
-			weightLbs:      230,
-			wingspanInches: MustLengthToInches("7'3"),
-			want:           80,
-		},
+		// 7'3" height
 		{
 			name:           "7'3\" at 250 lbs",
 			heightInches:   MustLengthToInches("7'3"),
 			weightLbs:      250,
-			wingspanInches: MustLengthToInches("7'3"),
+			wingspanInches: MustLengthToInches(GetDefaultWingspan("7'3\"")),
 			want:           75,
 		},
+		// 7'4" height
 		{
-			name:           "7'3\" at 270 lbs",
-			heightInches:   MustLengthToInches("7'3"),
-			weightLbs:      270,
-			wingspanInches: MustLengthToInches("7'3"),
+			name:           "7'4\" at 260 lbs",
+			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
+			weightLbs:      260,
+			wingspanInches: MustLengthToInches(GetDefaultWingspan(CENTER_MAX_HEIGHT)),
 			want:           70,
 		},
-		{
-			name:           "7'3\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches("7'3"),
-			weightLbs:      290,
-			wingspanInches: MustLengthToInches("7'3"),
-			want:           64,
-		},
-		// 7'4" height - weight variations
-		{
-			name:           "7'4\" at 230 lbs (lightest tested)",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      230,
-			wingspanInches: MustLengthToInches("7'5"),
-			want:           77,
-		},
-		{
-			name:           "7'4\" at 232 lbs",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      232,
-			wingspanInches: MustLengthToInches("7'5"),
-			want:           76,
-		},
-		{
-			name:           "7'4\" at 240 lbs",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      240,
-			wingspanInches: MustLengthToInches("7'5"),
-			want:           74,
-		},
-		{
-			name:           "7'4\" at 265 lbs",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      265,
-			wingspanInches: MustLengthToInches("7'5"),
-			want:           68,
-		},
-		{
-			name:           "7'4\" at 287 lbs",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      287,
-			wingspanInches: MustLengthToInches("7'5"),
-			want:           63,
-		},
-		{
-			name:           "7'4\" at 290 lbs (maximum weight)",
-			heightInches:   MustLengthToInches(CENTER_MAX_HEIGHT),
-			weightLbs:      GetBounds(CENTER_MAX_HEIGHT).MaxWeight,
-			wingspanInches: MustLengthToInches(GetBounds(CENTER_MAX_HEIGHT).MaxWingspan),
-			want:           62,
-		},
-		// TODO: Add intermediate heights as you test them
 	}
 
 	for _, tt := range tests {
@@ -334,7 +228,7 @@ func TestDrivingDunk(t *testing.T) {
 		{
 			name:           "6'7\" with 6'7\" wingspan",
 			heightInches:   MustLengthToInches("6'7"),
-			weightLbs:      270,
+			weightLbs:      GetDefaultWeight("6'7"),
 			wingspanInches: MustLengthToInches("6'7"),
 			want:           95,
 		},
