@@ -26,6 +26,7 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
 
 ### Driving Layup ✅ (COMPLETE!)
 - **Pattern**: Height is primary factor, weight affects caps at 6'11" and taller
+- **Wingspan Impact**: None - wingspan does NOT affect this attribute
 - **Confirmed Values**:
   - 6'7"H → 99 (weight independent)
   - 6'8"H → 99 (weight independent)
@@ -42,6 +43,20 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
   - Weight impact increases dramatically with height
   - Taller players have much wider cap ranges based on weight
 
+### Driving Dunk 🔄 (PARTIAL - Testing in Progress)
+- **Pattern**: Wingspan affects caps (CONFIRMED)
+- **Height Impact**: Unknown (need to test more heights)
+- **Weight Impact**: Appears not to matter at 6'7" (need confirmation at other heights)
+- **Confirmed Values at 6'7" height**:
+  - 6'7"H 270LBS 6'7"WS → 95
+  - 6'7"H 270LBS 6'8"WS → 97
+  - 6'7"H 270LBS 6'9"WS → 98
+  - 6'7"H 270LBS 7'1"WS → 99
+- **Key Insights**:
+  - Wingspan DOES affect Driving Dunk (unlike Driving Layup)
+  - At 6'7" height: +2 cap per inch of wingspan increase (approximately)
+  - Need to test: Other heights, weight variations, full wingspan range
+
 ---
 
 ## Attributes To Test
@@ -49,8 +64,8 @@ This document tracks observed patterns when testing Center attributes in NBA 2K2
 ### Finishing
 - [x] Close Shot (✅ Always 99)
 - [x] Pass Accuracy (✅ Always 99)
-- [🔄] Driving Layup (Height-based, testing in progress)
-- [ ] Driving Dunk
+- [x] Driving Layup (✅ COMPLETE - All 10 heights)
+- [🔄] Driving Dunk (Testing in progress - wingspan DOES affect caps!)
 - [ ] Standing Dunk
 - [ ] Post Control
 

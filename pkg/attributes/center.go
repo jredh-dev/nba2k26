@@ -231,10 +231,16 @@ func DrivingDunk(heightInches, weightLbs, wingspanInches int) int {
 	switch heightInches {
 	case MustLengthToInches("6'7"):
 		switch weightLbs {
-		case 270:
+		default: // weight doesn't matter for this one here
 			switch wingspanInches {
 			case MustLengthToInches("7'1"):
 				return 99
+			case MustLengthToInches("6'9"):
+				return 98
+			case MustLengthToInches("6'8"):
+				return 97
+			case MustLengthToInches("6'7"):
+				return 95
 			}
 		}
 	}

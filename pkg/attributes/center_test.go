@@ -321,3 +321,52 @@ func TestDrivingLayup(t *testing.T) {
 		})
 	}
 }
+
+func TestDrivingDunk(t *testing.T) {
+	tests := []struct {
+		name           string
+		heightInches   int
+		weightLbs      int
+		wingspanInches int
+		want           int
+	}{
+		// 6'7" height - wingspan variations (weight doesn't matter at this height)
+		{
+			name:           "6'7\" with 6'7\" wingspan (minimum)",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270, // tested weight
+			wingspanInches: MustLengthToInches("6'7"),
+			want:           95,
+		},
+		{
+			name:           "6'7\" with 6'8\" wingspan",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'8"),
+			want:           97,
+		},
+		{
+			name:           "6'7\" with 6'9\" wingspan",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("6'9"),
+			want:           98,
+		},
+		{
+			name:           "6'7\" with 7'1\" wingspan (maximum tested)",
+			heightInches:   MustLengthToInches("6'7"),
+			weightLbs:      270,
+			wingspanInches: MustLengthToInches("7'1"),
+			want:           99,
+		},
+		// TODO: Test other heights to find full pattern
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := DrivingDunk(tt.heightInches, tt.weightLbs, tt.wingspanInches)
+			assert.Equal(t, tt.want, got, "DrivingDunk(%d, %d, %d) = %d, want %d",
+				tt.heightInches, tt.weightLbs, tt.wingspanInches, got, tt.want)
+		})
+	}
+}
