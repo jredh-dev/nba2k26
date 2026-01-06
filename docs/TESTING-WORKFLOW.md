@@ -3,36 +3,40 @@
 ## Goal
 Systematically discover attribute cap formulas for NBA 2K26 Center position by testing specific character builds.
 
-## Current Priority: Driving Layup (All Heights)
+## Current Priority: Driving Dunk (Test Wingspan Impact)
 
-We know:
-- 6'7" → 99 cap
-- 7'4" → 62 cap
+✅ **COMPLETED**: Driving Layup (all 10 heights, 6'7" - 7'4")
 
-**Next: Test all intermediate heights to find the pattern**
+**Next: Test Driving Dunk to determine if wingspan affects caps**
 
 ### Test Queue (Priority Order)
 
-1. **Driving Layup - All Heights**
-   - [ ] 6'8" / 220 lbs / 6'9" wingspan → ?
-   - [ ] 6'9" / 225 lbs / 6'10" wingspan → ?
-   - [ ] 6'10" / 230 lbs / 6'11" wingspan → ?
-   - [ ] 6'11" / 235 lbs / 7'0" wingspan → ?
-   - [ ] 7'0" / 240 lbs / 7'1" wingspan → ?
-   - [ ] 7'1" / 245 lbs / 7'2" wingspan → ?
-   - [ ] 7'2" / 250 lbs / 7'3" wingspan → ?
-   - [ ] 7'3" / 255 lbs / 7'4" wingspan → ?
+1. ✅ **Driving Layup - All Heights** (COMPLETE!)
+   - ✅ 6'7" through 7'4" (all 10 heights tested)
+   - Pattern: Height-based with weight impact at 6'11"+
+   - Weight impact increases dramatically with height
 
-2. **Driving Dunk - Wingspan Variations (Single Height)**
-   - Test 7'0" height with all valid wingspans (7'0" through 7'6")
-   - Purpose: Determine if wingspan affects cap
+2. **Driving Dunk - Wingspan Test** (CURRENT PRIORITY)
+   - Test Strategy: Pick ONE height (7'0") and vary wingspan to see if it matters
+   - [ ] 7'0" / 250 lbs / 7'0" wingspan (minimum) → ?
+   - [ ] 7'0" / 250 lbs / 7'2" wingspan → ?
+   - [ ] 7'0" / 250 lbs / 7'4" wingspan → ?
+   - [ ] 7'0" / 250 lbs / 7'6" wingspan (maximum) → ?
+   - **Purpose**: If all 4 values are the same, wingspan doesn't matter
+   - **If different**: Test more systematically like Driving Layup
    
-3. **Standing Dunk - Same Pattern**
+3. **Standing Dunk - Similar Pattern Expected**
+   - Start with wingspan test at 7'0"
+   - Likely similar to Driving Dunk
+   
+4. **Post Control - Unknown Pattern**
+   - Could be height, weight, or wingspan-based
+   - Test extremes first
 
-4. **Speed - Height Variations**
+5. **Speed - Height Variations**
    - Likely follows height pattern (taller = slower)
 
-5. **Strength - Weight Variations**
+6. **Strength - Weight Variations**
    - Likely follows weight pattern (heavier = stronger)
 
 ## Testing Protocol
@@ -139,4 +143,26 @@ func DrivingLayup(heightInches, weightLbs, wingspanInches int) int {
 
 ---
 
-**Current Status**: Refactoring complete, tests passing, ready for systematic testing
+## Next Testing Session
+
+**Attribute**: Driving Dunk  
+**Question**: Does wingspan affect the cap?  
+**Method**: Test 7'0" height, 250 lbs, with 4 different wingspans (min, low, high, max)
+
+**In-Game Testing Steps**:
+1. Create Center at 7'0" height, 250 lbs
+2. Set wingspan to 7'0" (minimum for that height)
+3. Check Driving Dunk cap → record value
+4. Repeat with wingspans: 7'2", 7'4", 7'6" (maximum)
+5. If all 4 values are identical → wingspan doesn't matter (like Driving Layup)
+6. If values differ → wingspan DOES matter, test systematically
+
+**After Testing**:
+- Add findings to `docs/center-findings.md`
+- Add test cases to `pkg/attributes/center_test.go`
+- Implement `DrivingDunk()` function in `pkg/attributes/center.go`
+- Run `go test ./pkg/attributes/... -v` to verify
+
+---
+
+**Current Status**: Driving Layup complete (all 10 heights). Ready to test Driving Dunk.
