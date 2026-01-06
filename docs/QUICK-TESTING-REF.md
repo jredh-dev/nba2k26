@@ -1,49 +1,36 @@
 # Quick Testing Reference
 
-## Next Tests Needed
+## 🎯 CURRENT PRIORITY: Driving Dunk (Wingspan Test)
 
-### 🎯 Priority 1: Driving Layup (Intermediate Heights)
+✅ **Driving Layup is COMPLETE** (all 10 heights, 6'7" - 7'4")
 
-**We now know:**
-- 6'7" (any weight) → 99
-- 7'4" → 62-77 (weight dependent)
+### Driving Dunk - Wingspan Impact Test
 
-**Next: Test intermediate heights to find the pattern**
+**Question**: Does wingspan affect Driving Dunk caps?
 
-For each height below, test with **minimum weight** for that height:
+**Test at 7'0" height, 250 lbs, varying wingspan:**
 
-| Height | Min Weight | Wingspan | Driving Layup Cap? |
-|--------|------------|----------|-------------------|
-| ✅ 6'7"   | 215    | 6'7"     | 99 |
-| **6'8"**   | **215**    | **6'8"**     | **❓** |
-| **6'9"**   | **220**    | **6'9"**     | **❓** |
-| **6'10"**  | **220**    | **6'10"**    | **❓** |
-| **6'11"**  | **225**    | **6'11"**    | **❓** |
-| **7'0"**   | **225**    | **7'0"**     | **❓** |
-| **7'1"**   | **225**    | **7'1"**     | **❓** |
-| **7'2"**   | **230**    | **7'2"**     | **❓** |
-| **7'3"**   | **230**    | **7'3"**     | **❓** |
-| ✅ 7'4"   | 230    | 7'4"     | 77 |
+| Test # | Height | Weight | Wingspan | Driving Dunk Cap? |
+|--------|--------|--------|----------|-------------------|
+| 1      | 7'0"   | 250    | 7'0"     | ❓ (minimum wingspan) |
+| 2      | 7'0"   | 250    | 7'2"     | ❓ |
+| 3      | 7'0"   | 250    | 7'4"     | ❓ |
+| 4      | 7'0"   | 250    | 7'6"     | ❓ (maximum wingspan) |
 
-**Why minimum weight?** This gives us the baseline cap for each height. Then we can test if weight matters at other heights too.
+**What we're looking for:**
+- ✅ If all 4 values are **the same** → Wingspan doesn't matter (like Driving Layup)
+- ⚠️ If values are **different** → Wingspan DOES matter, need systematic testing
 
-### 🎯 Priority 2: Driving Dunk (Wingspan Test)
+### If Wingspan Matters (Values Different):
 
-Once Driving Layup pattern is found, test Driving Dunk with **one height** but varying wingspans:
+Test minimum/maximum builds to establish range:
 
-**All tests at 7'0" height, 240 lbs:**
+| Build Type | Height | Weight | Wingspan | Driving Dunk Cap? |
+|------------|--------|--------|----------|-------------------|
+| Min build  | 6'7"   | 215    | 6'7"     | ❓ |
+| Max build  | 7'4"   | 290    | 7'10"    | ❓ |
 
-| Wingspan | Driving Dunk Cap? |
-|----------|-------------------|
-| 7'0"     | ❓ |
-| 7'1"     | ❓ |
-| 7'2"     | ❓ |
-| 7'3"     | ❓ |
-| 7'4"     | ❓ |
-| 7'5"     | ❓ |
-| 7'6"     | ❓ |
-
-**Purpose**: Determine if wingspan affects dunk caps (likely yes)
+Then test systematically like we did with Driving Layup.
 
 ---
 
@@ -67,7 +54,14 @@ I'll update the code/tests with your findings.
 
 ---
 
-## Pattern Clues
+## Completed Attributes ✅
+
+### Driving Layup (COMPLETE - All 10 Heights)
+- **Pattern**: Height-based with weight impact at 6'11"+
+- **6'7" - 6'10"**: Fixed caps (99, 99, 98, 96) - weight doesn't matter
+- **6'11"+**: Weight affects cap, impact increases with height
+- **Full range**: 62-99 across all builds
+- **Wingspan**: Does NOT affect this attribute
 
 ### If Linear (Most Likely for Driving Layup):
 - Each inch of height changes cap by same amount
