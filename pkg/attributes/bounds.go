@@ -7,74 +7,96 @@ import "fmt"
 
 // PhysicalBounds represents the valid weight and wingspan ranges for a given height
 type PhysicalBounds struct {
-	MinWeight   int
-	MaxWeight   int
-	MinWingspan string
-	MaxWingspan string
+	MinWeight       int
+	MaxWeight       int
+	DefaultWeight   int // The default/baseline weight for this height in-game
+	MinWingspan     string
+	MaxWingspan     string
+	DefaultWingspan string // The default wingspan for this height in-game
 }
 
 // CenterHeightBounds maps each valid center height to its weight/wingspan constraints
 // This data is discovered through in-game testing
 var CenterHeightBounds = map[string]PhysicalBounds{
 	"6'7\"": {
-		MinWeight:   215,
-		MaxWeight:   270,
-		MinWingspan: "6'7\"",
-		MaxWingspan: "7'1\"",
+		MinWeight:       215,
+		MaxWeight:       270,
+		DefaultWeight:   240, // TODO: Verify default weight for 6'7"
+		MinWingspan:     "6'7\"",
+		MaxWingspan:     "7'1\"",
+		DefaultWingspan: "6'9\"", // TODO: Verify default wingspan for 6'7"
 	},
 	"6'8\"": {
-		MinWeight:   215,
-		MaxWeight:   275,
-		MinWingspan: "6'8\"",
-		MaxWingspan: "7'2\"",
+		MinWeight:       215,
+		MaxWeight:       275,
+		DefaultWeight:   245, // TODO: Verify
+		MinWingspan:     "6'8\"",
+		MaxWingspan:     "7'2\"",
+		DefaultWingspan: "6'10\"", // TODO: Verify
 	},
 	"6'9\"": {
-		MinWeight:   215,
-		MaxWeight:   285,
-		MinWingspan: "6'9\"",
-		MaxWingspan: "7'3\"",
+		MinWeight:       215,
+		MaxWeight:       285,
+		DefaultWeight:   250, // TODO: Verify
+		MinWingspan:     "6'9\"",
+		MaxWingspan:     "7'3\"",
+		DefaultWingspan: "6'11\"", // TODO: Verify
 	},
 	"6'10\"": {
-		MinWeight:   215,
-		MaxWeight:   285,
-		MinWingspan: "6'10\"",
-		MaxWingspan: "7'4\"",
+		MinWeight:       215,
+		MaxWeight:       285,
+		DefaultWeight:   250, // TODO: Verify
+		MinWingspan:     "6'10\"",
+		MaxWingspan:     "7'4\"",
+		DefaultWingspan: "7'0\"", // TODO: Verify
 	},
 	"6'11\"": {
-		MinWeight:   215,
-		MaxWeight:   290,
-		MinWingspan: "6'11\"",
-		MaxWingspan: "7'5\"",
+		MinWeight:       215,
+		MaxWeight:       290,
+		DefaultWeight:   255, // TODO: Verify
+		MinWingspan:     "6'11\"",
+		MaxWingspan:     "7'5\"",
+		DefaultWingspan: "7'1\"", // TODO: Verify
 	},
 	"7'0\"": {
-		MinWeight:   215,
-		MaxWeight:   290,
-		MinWingspan: "7'0\"",
-		MaxWingspan: "7'6\"",
+		MinWeight:       215,
+		MaxWeight:       290,
+		DefaultWeight:   255, // TODO: Verify
+		MinWingspan:     "7'0\"",
+		MaxWingspan:     "7'6\"",
+		DefaultWingspan: "7'2\"", // TODO: Verify
 	},
 	"7'1\"": {
-		MinWeight:   220,
-		MaxWeight:   290,
-		MinWingspan: "7'1\"",
-		MaxWingspan: "7'7\"",
+		MinWeight:       220,
+		MaxWeight:       290,
+		DefaultWeight:   260, // TODO: Verify
+		MinWingspan:     "7'1\"",
+		MaxWingspan:     "7'7\"",
+		DefaultWingspan: "7'3\"", // TODO: Verify
 	},
 	"7'2\"": {
-		MinWeight:   220,
-		MaxWeight:   290,
-		MinWingspan: "7'2\"",
-		MaxWingspan: "7'8\"",
+		MinWeight:       220,
+		MaxWeight:       290,
+		DefaultWeight:   260, // TODO: Verify
+		MinWingspan:     "7'2\"",
+		MaxWingspan:     "7'8\"",
+		DefaultWingspan: "7'4\"", // TODO: Verify
 	},
 	"7'3\"": {
-		MinWeight:   230,
-		MaxWeight:   290,
-		MinWingspan: "7'3\"",
-		MaxWingspan: "7'9\"",
+		MinWeight:       230,
+		MaxWeight:       290,
+		DefaultWeight:   260, // TODO: Verify
+		MinWingspan:     "7'3\"",
+		MaxWingspan:     "7'9\"",
+		DefaultWingspan: "7'5\"", // TODO: Verify
 	},
 	"7'4\"": {
-		MinWeight:   230,
-		MaxWeight:   290,
-		MinWingspan: "7'4\"",
-		MaxWingspan: "7'10\"",
+		MinWeight:       230,
+		MaxWeight:       290,
+		DefaultWeight:   260, // Confirmed
+		MinWingspan:     "7'4\"",
+		MaxWingspan:     "7'10\"",
+		DefaultWingspan: "7'7\"", // Confirmed
 	},
 }
 
@@ -84,6 +106,22 @@ func GetBounds(height string) *PhysicalBounds {
 		return &bounds
 	}
 	return nil
+}
+
+// GetDefaultWeight returns the default/baseline weight for a given height
+// Returns -1 if height is invalid
+func GetDefaultWeight(height string) int {
+	bounds := GetBounds(height)
+	if bounds == nil {
+		return -1
+	}
+	return bounds.DefaultWeight
+}
+
+// GetDefaultWeightForInches returns the default weight for a height in inches
+func GetDefaultWeightForInches(heightInches int) int {
+	heightStr := InchesToLength(heightInches)
+	return GetDefaultWeight(heightStr)
 }
 
 // ValidateCenter checks if a height/weight/wingspan combination is valid for a Center
