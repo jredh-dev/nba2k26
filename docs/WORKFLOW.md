@@ -1,0 +1,315 @@
+# Development Workflow
+
+## Initial Setup (Completed)
+
+The initial repository setup, data scraping, validation tools, and configuration were completed directly on the `main` branch before branch protection was enabled. This included:
+
+- Commits `fa2f443` through `f83613e` (Jan 5-7, 2026)
+- NBA2KLab API scraper implementation
+- DrivingLayup refactoring with scraped data
+- Quality validation tools
+- Pre/post-scraping comparison documentation
+- Repository configuration (CODEOWNERS, branch protection, auto-merge)
+
+**Rationale:** Initial setup work was done to establish the foundation, tooling, and data infrastructure before implementing the formal agent workflow.
+
+---
+
+## Agent Workflow (Going Forward)
+
+**ALL future development MUST follow the agent workflow using agentctl.**
+
+### Repository Configuration
+
+✅ Repository is configured and verified:
+```bash
+agentctl repo verify jredh-dev/nba2k26
+```
+
+**Protections in place:**
+- Branch protection on `main` (requires 1 approval)
+- CODEOWNERS file (`* @jredh`)
+- Auto-merge enabled
+- Squash merge strategy
+
+---
+
+## Development Process
+
+### 1. Spawn Agent for New Work
+
+```bash
+cd /Users/jredh/Development/agentic
+
+# Spawn agent with descriptive task
+agentctl agent spawn "implement StandingDunk attribute" --repo jredh-dev/nba2k26
+```
+
+**Output:**
+```
+Agent ID:     agent-XXX
+Branch:       agent-XXX/implement-standing-dunk-attribute
+Worktree:     work/agent-XXX/nba2k26
+```
+
+### 2. Work in Agent Worktree
+
+```bash
+# Navigate to agent workspace
+cd work/agent-XXX/nba2k26
+
+# Verify git identity
+git config user.name   # Should show: Agent XXX
+git config user.email  # Should show: j.red.hooper+automation-XXX@gmail.com
+
+# Make changes
+# ... implement attribute using data from data/Center_caps.json ...
+
+# Commit work
+git add .
+git commit -m "feat: implement StandingDunk with data-driven lookup"
+```
+
+### 3. Create Pull Request
+
+```bash
+# Return to agentic root
+cd /Users/jredh/Development/agentic
+
+# Create PR (automatically pushes branch and creates PR)
+agentctl pr create agent-XXX
+```
+
+**This automatically:**
+- Pushes branch to GitHub
+- Creates PR against `main`
+- Requests review from `@jredh` (via CODEOWNERS)
+- Enables auto-merge with squash strategy
+- Links PR to agent in registry
+
+### 4. Code Review
+
+**On GitHub:**
+- PR is created and review requested
+- Review the changes
+- Leave comments if changes needed
+- Approve when ready
+
+**If changes requested:**
+```bash
+cd /Users/jredh/Development/agentic/work/agent-XXX/nba2k26
+
+# Make changes
+git add .
+git commit -m "fix: address review feedback"
+git push origin $(git branch --show-current)
+
+# PR updates automatically
+```
+
+### 5. Auto-Merge
+
+**After approval:**
+- Auto-merge triggers automatically
+- PR squash-merges to `main`
+- Branch deleted automatically
+- Main branch is updated
+
+### 6. Cleanup Agent
+
+```bash
+cd /Users/jredh/Development/agentic
+
+# Cleanup agent workspace
+agentctl agent cleanup agent-XXX
+```
+
+**This removes:**
+- Agent worktree
+- Local branch
+- Remote branch (if not already deleted)
+- Agent from registry
+
+---
+
+## Example: Implementing StandingDunk
+
+Complete workflow example:
+
+```bash
+# 1. Spawn agent
+cd /Users/jredh/Development/agentic
+agentctl agent spawn "implement StandingDunk attribute" --repo jredh-dev/nba2k26
+
+# 2. Implement in worktree
+cd work/agent-005/nba2k26
+
+# Check scraped data for patterns
+jq '[.[] | {h: .height, ws: .wingspan, w: .weight, sd: .standing_dunk}] | unique_by(.h) | sort_by(.h)' data/Center_caps.json
+
+# Implement lookup table in pkg/attributes/center.go
+# Add tests in pkg/attributes/center_test.go
+# Run tests: go test ./pkg/attributes/... -v
+
+git add pkg/attributes/center.go pkg/attributes/center_test.go
+git commit -m "feat: implement StandingDunk with data-driven lookup
+
+- Add StandingDunk function using scraped data
+- Pattern: height + wingspan based (similar to DrivingDunk)
+- Add comprehensive test cases
+- Validates against 903 scraped builds"
+
+# 3. Create PR
+cd ../../..
+agentctl pr create agent-005
+
+# 4. Review on GitHub, approve
+
+# 5. PR auto-merges
+
+# 6. Cleanup
+agentctl agent cleanup agent-005
+```
+
+---
+
+## Quality Checks
+
+**Before creating PR, always run:**
+
+```bash
+# Unit tests
+go test ./pkg/attributes/... -v
+
+# Quality check tool
+go run cmd/quality-check/main.go
+
+# Build validation (if relevant)
+go run cmd/validate-builds/main.go
+```
+
+---
+
+## Best Practices
+
+### Branch Naming
+- Auto-generated from task description
+- Format: `agent-XXX/task-slug`
+- Example: `agent-005/implement-standing-dunk-attribute`
+
+### Commit Messages
+Follow conventional commits:
+- `feat:` - New feature/attribute implementation
+- `fix:` - Bug fix
+- `refactor:` - Code restructuring without behavior change
+- `test:` - Adding/updating tests
+- `docs:` - Documentation updates
+- `chore:` - Maintenance tasks
+
+### PR Descriptions
+Auto-generated by agentctl, includes:
+- Task description
+- Changes made
+- Test results
+- Links to related issues
+
+### Agent Identity
+**CRITICAL:** Always verify you're in the correct agent worktree:
+```bash
+# Check identity
+git config user.name    # Must match agent number
+pwd                     # Must show work/agent-XXX/
+
+# If mismatch, you're in wrong worktree!
+```
+
+---
+
+## Troubleshooting
+
+### Agent already exists
+```bash
+# Check existing agents
+agentctl agent list
+
+# Cleanup if needed
+agentctl agent cleanup agent-XXX
+```
+
+### PR creation fails
+```bash
+# Verify repository configuration
+agentctl repo verify jredh-dev/nba2k26
+
+# Check branch is pushed
+cd work/agent-XXX/nba2k26
+git push origin $(git branch --show-current)
+```
+
+### Tests failing
+```bash
+# Run tests in worktree
+cd work/agent-XXX/nba2k26
+go test ./pkg/attributes/... -v
+
+# Check quality
+go run cmd/quality-check/main.go
+```
+
+---
+
+## Registry
+
+Agent state tracked in `/Users/jredh/Development/agentic/.agent-registry.json`
+
+**Key fields:**
+- `id` - Agent identifier (agent-XXX)
+- `branch` - Git branch name
+- `worktree_path` - Absolute path to worktree
+- `status` - Current state (spawning, working, pr_open, merged, etc.)
+- `pull_request_url` - GitHub PR URL
+- `git_identity` - Name and email for commits
+
+**Query registry:**
+```bash
+# Show all agents
+cat .agent-registry.json | jq '.agents[]'
+
+# Show specific agent
+cat .agent-registry.json | jq '.agents[] | select(.id == "agent-005")'
+
+# Show agents by status
+cat .agent-registry.json | jq '.agents[] | select(.status == "working")'
+```
+
+---
+
+## Documentation
+
+- **Agent System Reference:** `/Users/jredh/Development/agentic/AGENTS.md`
+- **Attribute Status:** `docs/ATTRIBUTE-STATUS.md`
+- **Session History:** `docs/SESSION-*.md`
+- **Validation Docs:** `docs/PRE-VS-POST-SCRAPING.md`
+
+---
+
+## Next Attributes to Implement
+
+**Priority order (all have data available):**
+
+1. **StandingDunk** - Similar to DrivingDunk (height + wingspan)
+2. **Block** - Height + wingspan pattern
+3. **OffensiveRebound** - Height + wingspan + weight
+4. **DefensiveRebound** - Height + wingspan
+5. **Vertical** - Height/weight inverse
+6. **Speed** - Height/weight inverse
+7. **Agility** - Similar to speed
+8. **Strength** - Weight-based
+
+Each attribute implementation should follow this workflow!
+
+---
+
+**Workflow Status:** ✅ Documented and ready  
+**Repository Status:** ✅ Configured for agent workflow  
+**Next Task:** Use `agentctl agent spawn` for next attribute implementation
