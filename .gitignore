@@ -23,3 +23,4 @@ data/*_caps.json
 
 # Badge requirements are git-tracked (source of truth)
 !data/badge_requirements.json
+bin/
