@@ -177,7 +177,7 @@ type badgeInfo struct {
 	tier badges.BadgeTier
 }
 
-// calculateAttributeCaps fetches real attribute caps from NBA2KLab API
+// calculateAttributeCaps fetches real attribute caps from NBA2KLab API with fallback to local calculations
 func calculateAttributeCaps(height, wingspan, weight int) *scraper.AttributeCaps {
 	// Try to fetch real data from NBA2KLab first
 	client := scraper.NewClient()
