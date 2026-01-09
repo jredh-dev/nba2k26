@@ -30,9 +30,10 @@ type Client struct {
 	baseURL    string
 	authToken  string
 	year       int
+	cache      *Cache
 }
 
-// NewClient creates a new NBA2KLab API client
+// NewClient creates a new NBA2KLab API client with caching enabled
 func NewClient() *Client {
 	return &Client{
 		httpClient: &http.Client{
@@ -41,7 +42,31 @@ func NewClient() *Client {
 		baseURL:   NBA2KLabAPIURL,
 		authToken: NBA2KLabAuthToken,
 		year:      GameYear,
+		cache:     NewCache(""), // Use default cache directory
 	}
+}
+
+// NewClientWithCache creates a client with a custom cache directory
+func NewClientWithCache(cacheDir string) *Client {
+	return &Client{
+		httpClient: &http.Client{
+			Timeout: 10 * time.Second,
+		},
+		baseURL:   NBA2KLabAPIURL,
+		authToken: NBA2KLabAuthToken,
+		year:      GameYear,
+		cache:     NewCache(cacheDir),
+	}
+}
+
+// DisableCache turns off caching for this client
+func (c *Client) DisableCache() {
+	c.cache.Disable()
+}
+
+// EnableCache turns on caching for this client
+func (c *Client) EnableCache() {
+	c.cache.Enable()
 }
 
 // AttributeCaps represents the complete attribute data for a player build
@@ -91,7 +116,30 @@ type apiResponse struct {
 }
 
 // GetAttributeCaps fetches attribute caps for a specific build configuration
+// Uses cache when available, falls back to API, and stores successful responses
 func (c *Client) GetAttributeCaps(position string, heightInches, wingspanInches, weight int) (*AttributeCaps, error) {
+	// Try cache first
+	if cached, err := c.cache.Get(position, heightInches, wingspanInches, weight); err == nil {
+		return cached, nil
+	}
+
+	// Cache miss - fetch from API
+	attrs, err := c.fetchFromAPI(position, heightInches, wingspanInches, weight)
+	if err != nil {
+		return nil, err
+	}
+
+	// Store in cache for future use
+	if err := c.cache.Set(attrs); err != nil {
+		// Log warning but don't fail - we still have the data
+		fmt.Printf("Warning: Failed to cache response: %v\n", err)
+	}
+
+	return attrs, nil
+}
+
+// fetchFromAPI performs the actual API request (extracted for clarity)
+func (c *Client) fetchFromAPI(position string, heightInches, wingspanInches, weight int) (*AttributeCaps, error) {
 	// Construct request body
 	reqBody := apiRequest{
 		Filters: []filter{
