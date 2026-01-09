@@ -177,8 +177,18 @@ type badgeInfo struct {
 	tier badges.BadgeTier
 }
 
-// calculateAttributeCaps uses the attribute system to calculate all caps
+// calculateAttributeCaps fetches real attribute caps from NBA2KLab API
 func calculateAttributeCaps(height, wingspan, weight int) *scraper.AttributeCaps {
+	// Try to fetch real data from NBA2KLab first
+	client := scraper.NewClient()
+	attrs, err := client.GetAttributeCaps("Center", height, wingspan, weight)
+
+	if err == nil && attrs != nil {
+		return attrs
+	}
+
+	// Fallback to local attribute functions if API fails
+	fmt.Fprintf(os.Stderr, "Warning: Failed to fetch from NBA2KLab API, using local calculations: %v\n", err)
 	return &scraper.AttributeCaps{
 		Height:           height,
 		Wingspan:         wingspan,
