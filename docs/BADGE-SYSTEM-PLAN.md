@@ -1,7 +1,8 @@
 # NBA 2K26 Badge System Implementation Plan
 
 **Created:** 2026-01-08  
-**Status:** Planning Phase
+**Updated:** 2026-01-09  
+**Status:** Phase 1 Complete - Infrastructure & CLI Tool Ready
 
 ## Overview
 
@@ -240,41 +241,73 @@ func TestBadgeAccuracy(t *testing.T) {
 
 ## Implementation Phases
 
-### Phase 1: Core Infrastructure ✅ (Next)
-**Files:** `pkg/badges/types.go`, `pkg/badges/registry.go`
+### Phase 1: Core Infrastructure ✅ COMPLETE
+**Completed:** 2026-01-09  
+**PR:** [#2](https://github.com/jredh-dev/nba2k26/pull/2)  
+**Files:** `pkg/badges/types.go`, `pkg/badges/loader.go`, `pkg/badges/calculator.go`
 
-- [ ] Define `BadgeTier` enum
-- [ ] Define `BadgeFunc` signature
-- [ ] Define `Badge` struct with metadata
-- [ ] Create `BadgeRegistry` map
-- [ ] Implement `GetAvailableBadges()` function
-- [ ] Implement `GetBadgeTier()` function
-- [ ] Unit tests for infrastructure
+- [x] Define `BadgeTier` enum
+- [x] Define `BadgeFunc` signature  
+- [x] Define `Badge` struct with metadata
+- [x] Implement `BadgeRequirements` struct (data-driven approach)
+- [x] Implement badge data loader from NBA2KLab JSON
+- [x] Implement `GetAvailableBadges()` function
+- [x] Implement `GetBadgeTier()` function
+- [x] Implement `GetBadgesByCategory()` function
+- [x] Unit tests for infrastructure (8 test functions, all passing)
+- [x] Support for Primary badges (ALL requirements must be met)
+- [x] Support for Secondary badges (ANY requirement can be met)
+- [x] Height restriction validation
 
-**Deliverable:** Badge system foundation with no badges implemented yet
+**Deliverable:** Badge system foundation with 64 badges loaded from NBA2KLab data
 
-### Phase 2: High-Priority Badges (5-10 badges)
-**Focus:** Most common/important Center badges
+**Key Achievement:** Instead of manual testing, we scraped actual badge requirements from NBA2KLab, giving us complete data for all 64 badges immediately.
 
-Start with badges that have **single attribute requirements** (easiest to test):
+### Phase 1.5: CLI Tool ✅ COMPLETE
+**Completed:** 2026-01-09  
+**PR:** [#3](https://github.com/jredh-dev/nba2k26/pull/3)  
+**Files:** `cmd/badge-checker/main.go`
 
-1. **Post Spin Technician** - PostControl only
-2. **Putback Boss** - OffensiveRebound + StandingDunk
-3. **Rise Up** - StandingDunk + Vertical
-4. **Pogo Stick** - Vertical + Block
-5. **Boxout Beast** - DefensiveRebound + Strength
-6. **Brick Wall** - Strength + Height (or Weight?)
-7. **Anchor** - InteriorDefense + Block + Height
-8. **Posterizer** - DrivingDunk + Vertical
-9. **Intimidator** - InteriorDefense + Height
-10. **Post Lockdown** - InteriorDefense + Strength
+- [x] Create badge-checker CLI tool
+- [x] Support height/wingspan input (feet-inches or total inches)
+- [x] Filter badges by category
+- [x] Query specific badges
+- [x] Show calculated attribute caps (--show-attributes)
+- [x] Filter by minimum tier
+- [x] Comprehensive README with examples
 
-**Testing Process:**
-1. Pick 3-5 scraped builds with varying attributes
-2. Test each build in-game
-3. Record available badges and max tiers
-4. Implement badge functions based on findings
-5. Add test cases for each badge
+**Deliverable:** User-facing CLI tool for badge queries
+
+### Phase 2: Complete Attribute Implementation (In Progress)
+**Status:** 3/21 attributes complete  
+**Focus:** Implement remaining attribute functions to unlock all badges
+
+**Current Status:**
+- ✅ Close Shot (implemented)
+- ✅ Driving Layup (implemented)
+- ✅ Driving Dunk (implemented)
+- ✅ Pass Accuracy (implemented)
+- ⏳ Standing Dunk (stub)
+- ⏳ Post Control (stub)
+- ⏳ Mid-Range Shot (stub)
+- ⏳ Three-Point Shot (stub)
+- ⏳ Free Throw (stub)
+- ⏳ Ball Handle (stub)
+- ⏳ Speed With Ball (stub)
+- ⏳ Interior Defense (stub)
+- ⏳ Perimeter Defense (stub)
+- ⏳ Steal (stub)
+- ⏳ Block (stub)
+- ⏳ Offensive Rebound (stub)
+- ⏳ Defensive Rebound (stub)
+- ⏳ Speed (stub)
+- ⏳ Agility (stub)
+- ⏳ Strength (stub)
+- ⏳ Vertical (stub)
+
+**Why This Matters:** Badge availability is calculated based on attribute caps. Until these attributes are implemented, many badges will show as unavailable even though they would be accessible with complete data.
+
+**Next Steps:** Use quality-check tool to validate and implement remaining attributes for Centers, then expand to other positions.
 
 ### Phase 3: Medium Priority (10-15 badges)
 **Focus:** Common shooting, playmaking, and defense badges
